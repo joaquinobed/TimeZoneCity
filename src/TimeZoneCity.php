@@ -3,7 +3,7 @@
  * Time Zone City
  * Everything you need for working with timezones and world time.
  *
- * @version    0.3 (2017-07-23 22:26:00 GMT)
+ * @version    0.4 (2017-07-23 23:37:00 GMT)
  * @author     Peter Kahl <peter.kahl@colossalmind.com>
  * @copyright  2017 Peter Kahl
  * @license    Apache License, Version 2.0
@@ -94,7 +94,7 @@ class TimeZoneCity {
   #===================================================================
 
   /**
-   * Valiates a timezone.
+   * Validates a timezone.
    * @var string
    */
   public function ValidZone($zone) {
@@ -130,10 +130,12 @@ class TimeZoneCity {
   #===================================================================
 
   /**
-   * Returns nearest timezone for given country and longitude.
-   *
+   * Returns nearest timezone for given country, longitude, latitude.
+   * @var country ....... string (2-letter country code)
+   * @var lat ........... float (latitude)
+   * @var long .......... float (longitude)
    */
-  public function GetNearestZone($country, $long) {
+  public function GetNearestZone($country, $lat, $long) {
     if (!empty($country)) {
       $sql = "SELECT `time_zone` FROM `timezonecity` WHERE `country_code`='". mysqli_real_escape_string($this->dbresource, strtoupper($country)) ."' ORDER BY ABS(`longitude` - '". mysqli_real_escape_string($this->dbresource, $long) ."') LIMIT 1;";
       $result = mysqli_query($this->dbresource, $sql);
@@ -145,7 +147,8 @@ class TimeZoneCity {
         return $row['time_zone'];
       }
     }
-    $sql = "SELECT `time_zone` FROM `timezonecity` ORDER BY ABS(`longitude` - '". mysqli_real_escape_string($this->dbresource, $long) ."') LIMIT 1;";
+    # Something was wrong with the country code. Now, we use only coordinates.
+    $sql = "SELECT `time_zone` FROM `timezonecity` ORDER BY ABS(`longitude` - '". mysqli_real_escape_string($this->dbresource, $long) ."'), ABS(`latitude` - '". mysqli_real_escape_string($this->dbresource, $lat) ."') LIMIT 1;";
     $result = mysqli_query($this->dbresource, $sql);
     if ($result === false) {
       throw new Exception('Error executing SQL query');

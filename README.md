@@ -27,10 +27,21 @@ mysqli_set_charset($link, "utf8mb4");
 $zoneObj = new TimeZoneCity;
 $zoneObj->dbresource = $link;
 
-$country = 'ru';
-$longitude = 38.1;
+$country   = 'ru';
+$latitude  = 55.61;
+$longitude = 38.76;
 
-echo $zoneObj->GetNearestZone($country, $longitude); # Europe/Moscow
+echo $zoneObj->GetNearestZone($country, $latitude, $longitude); # Europe/Moscow
+
+#-----------------------------------------------------------------------
+# If we don't know the country code, or the code is errorneous,
+# latitude and longitude will be used to determine the nearest timezone.
+
+$country   = '';
+$latitude  = 22.27;
+$longitude = 113.79;
+
+echo $zoneObj->GetNearestZone($country, $latitude, $longitude); # Asia/Macau
 
 ```
 
