@@ -16,7 +16,7 @@ Everything you need for working with timezones and world time. Each zone include
 
 ## Usage
 
-Get name of timezone from country code and longitude:
+Get name of timezone from country code, latitude and longitude:
 ```php
 use peterkahl\TimeZoneCity\TimeZoneCity;
 
@@ -34,11 +34,20 @@ $longitude = 38.76;
 echo $zoneObj->GetNearestZone($country, $latitude, $longitude); # Europe/Moscow
 
 #-----------------------------------------------------------------------
-# If we don't know the country code, or the code is errorneous,
+# If we don't know the country code, or the code is erorrneous,
 # latitude and longitude will be used to determine the nearest timezone.
 
 $country   = '';
 $latitude  = 22.27;
+$longitude = 113.79;
+
+echo $zoneObj->GetNearestZone($country, $latitude, $longitude); # Asia/Macau
+
+#-----------------------------------------------------------------------
+# Example when country code is erorrneous.
+
+$country   = 'DE';
+$latitude  = 22.27; # Coordintaes are near Macau; can't be Germany!
 $longitude = 113.79;
 
 echo $zoneObj->GetNearestZone($country, $latitude, $longitude); # Asia/Macau
