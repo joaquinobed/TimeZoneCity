@@ -3,7 +3,7 @@
  * Time Zone City
  * Everything you need for working with timezones and world time.
  *
- * @version    0.2 (2017-07-23 11:27:00 GMT)
+ * @version    0.3 (2017-07-23 22:26:00 GMT)
  * @author     Peter Kahl <peter.kahl@colossalmind.com>
  * @copyright  2017 Peter Kahl
  * @license    Apache License, Version 2.0
@@ -129,8 +129,23 @@ class TimeZoneCity {
 
   #===================================================================
 
+  /**
+   * Returns nearest timezone for given country and longitude.
+   *
+   */
   public function GetNearestZone($country, $long) {
-    $sql = "SELECT `time_zone` FROM `timezonecity` WHERE `country_code`='". mysqli_real_escape_string($this->dbresource, strtoupper($country)) ."' ORDER BY ABS(`longitude` - '". mysqli_real_escape_string($this->dbresource, $long) ."') LIMIT 1;";
+    if (!empty($country)) {
+      $sql = "SELECT `time_zone` FROM `timezonecity` WHERE `country_code`='". mysqli_real_escape_string($this->dbresource, strtoupper($country)) ."' ORDER BY ABS(`longitude` - '". mysqli_real_escape_string($this->dbresource, $long) ."') LIMIT 1;";
+      $result = mysqli_query($this->dbresource, $sql);
+      if ($result === false) {
+        throw new Exception('Error executing SQL query');
+      }
+      if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+        return $row['time_zone'];
+      }
+    }
+    $sql = "SELECT `time_zone` FROM `timezonecity` ORDER BY ABS(`longitude` - '". mysqli_real_escape_string($this->dbresource, $long) ."') LIMIT 1;";
     $result = mysqli_query($this->dbresource, $sql);
     if ($result === false) {
       throw new Exception('Error executing SQL query');
@@ -139,7 +154,7 @@ class TimeZoneCity {
       $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
       return $row['time_zone'];
     }
-    return 'unknown';
+    throw new Exception('Failed to determime nearest timezone');
   }
 
   #===================================================================
@@ -157,7 +172,7 @@ class TimeZoneCity {
   #===================================================================
 
   /**
-   * Tells whether a TZ is using daylight savings
+   * Tells whether a timezone is using daylight savings.
    * @author hertzel Armengol <emudojo @ gmail.com>
    */
   public function ZoneDoesDST($zone) {
