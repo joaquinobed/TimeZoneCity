@@ -3,7 +3,7 @@
  * Time Zone City
  * Everything you need for working with timezones and world time.
  *
- * @version    0.7 (2017-07-24 02:19:00 GMT)
+ * @version    0.8 (2017-07-24 09:46:00 GMT)
  * @author     Peter Kahl <peter.kahl@colossalmind.com>
  * @copyright  2017 Peter Kahl
  * @license    Apache License, Version 2.0
@@ -34,7 +34,7 @@ class TimeZoneCity {
   #===================================================================
 
   /**
-   * Returns the whole array according to specified sort criteria.
+   * Returns an array of timezones according to specified criteria.
    *
    * @var sortby ......... string
    *      Admissible values:
@@ -48,20 +48,38 @@ class TimeZoneCity {
    *          -- 'country_name'
    *          -- 'latitude'
    *          -- 'longitude'
-   *      OR multiple codes separated by comma
+   *      OR multiple criteria separated by comma, example:
+   *          -- 'offset,place_name'
    *
    * @var sortdir ........ string
    *      Admissible values:
    *          -- 'asc'
    *          -- 'desc'
+   *      OR multiple directions separated by comma, example:
+   *          -- 'desc,asc'
    *
    * @var onlycountry .... string
    *      2-letter country code, OR multiple codes separated by comma
+   *      Examples:
    *          -- 'us'
    *          -- 'us,ca,mx'
+   *          -- 'de,cz,sk,at,pl,fr,dk,be,nl,it,es,pt,ch,se,no,fi'
    *          -- '' (empty - no country limitation)
    */
-  public function GetAllZones($sortby = 'offset,place_name', $sortdir = 'asc', $onlycountry = '') {
+  public function GetAllZones($sortby = 'offset,place_name', $sortdir = 'asc,asc', $onlycountry = '') {
+
+    $sortdir = strtoupper($sortdir);
+    $validSortdir = array(
+      'ASC',
+      'DESC',
+    );
+    $sortdirArr = explode(',', $sortdir);
+    foreach ($sortdirArr as $k => $v) {
+      if (!in_array($v, $validSortdir)) {
+        throw new Exception('Illegal value argument sortdir');
+      }
+    }
+
     $sortby = strtolower($sortby);
     $validSortby = array(
       'time_zone',
@@ -80,22 +98,20 @@ class TimeZoneCity {
       if (!in_array($v, $validSortby)) {
         throw new Exception('Illegal value argument sortby');
       }
-      $sortbyArr[$k] = "`". mysqli_real_escape_string($this->dbresource, $v) ."`";
     }
-    $sortbyStr = implode(', ', $sortbyArr);
-    #----
-    $sortdir = strtoupper($sortdir);
-    $validSortdir = array(
-      'ASC',
-      'DESC',
-    );
-    if (!in_array($sortdir, $validSortdir)) {
-      throw new Exception('Illegal value argument sortdir');
+
+    $sortbyStr = '';
+    foreach ($sortbyArr as $k => $v) {
+      if (!isset($sortdirArr[$k])) {
+        $sortdirArr[$k] = 'ASC';
+      }
+      $sortbyStr .= ', `'. $v .'` '. $sortdirArr[$k];
     }
+
     if (!is_string($onlycountry)) {
       throw new Exception('Argument onlycountry must be a string');
     }
-    #------------------------------------------------------
+
     if (!empty($onlycountry)) {
       $onlyArr = explode(',', $onlycountry);
       foreach ($onlyArr as $k => $v) {
@@ -105,15 +121,21 @@ class TimeZoneCity {
         $onlyArr[$k] = "`country_code`='". mysqli_real_escape_string($this->dbresource, strtoupper($v)) ."'";
       }
       $onlyStr = implode(' OR ', $onlyArr);
-      $sql = "SELECT * FROM `timezonecity` WHERE ". $onlyStr ." ORDER BY ". $sortbyStr ." ". mysqli_real_escape_string($this->dbresource, $sortdir) .";";
+    }
+
+    if (!empty($onlycountry)) {
+      $sql = "SELECT * FROM `timezonecity` WHERE ". $onlyStr ." ORDER BY ". trim($sortbyStr, ', ') .";";
     }
     else {
-      $sql = "SELECT * FROM `timezonecity` ORDER BY ". $sortbyStr ." ". mysqli_real_escape_string($this->dbresource, $sortdir) .";";
+      $sql = "SELECT * FROM `timezonecity` ORDER BY ". trim($sortbyStr, ', ') .";";
     }
+
     $result = mysqli_query($this->dbresource, $sql);
+
     if ($result === false) {
       throw new Exception('Error executing SQL query');
     }
+
     $arr = array();
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
       $arr[] = $row;
