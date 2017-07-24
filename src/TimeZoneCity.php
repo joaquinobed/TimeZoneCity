@@ -3,7 +3,7 @@
  * Time Zone City
  * Everything you need for working with timezones and world time.
  *
- * @version    0.5 (2017-07-23 23:53:00 GMT)
+ * @version    0.6 (2017-07-24 00:35:00 GMT)
  * @author     Peter Kahl <peter.kahl@colossalmind.com>
  * @copyright  2017 Peter Kahl
  * @license    Apache License, Version 2.0
@@ -36,25 +36,31 @@ class TimeZoneCity {
   /**
    * Returns the whole array according to specified sort criteria.
    *
-   * @var sortby ..... string
+   * @var sortby ......... string
    *      Admissible values:
-   *          -- time_zone
-   *          -- offset
-   *          -- place_name
-   *          -- place_id
-   *          -- region_code
-   *          -- region_name
-   *          -- country_code
-   *          -- country_name
-   *          -- latitude
-   *          -- longitude
+   *          -- 'time_zone'
+   *          -- 'offset'
+   *          -- 'place_name'
+   *          -- 'place_id'
+   *          -- 'region_code'
+   *          -- 'region_name'
+   *          -- 'country_code'
+   *          -- 'country_name'
+   *          -- 'latitude'
+   *          -- 'longitude'
    *
-   * @var sortdir .... string
+   * @var sortdir ........ string
    *      Admissible values:
-   *          -- asc
-   *          -- desc
+   *          -- 'asc'
+   *          -- 'desc'
+   *
+   * @var onlycountry .... string
+   *      2-letter country code, OR multiple codes separated by comma
+   *          -- 'us'
+   *          -- 'us,ca,mx'
+   *          -- '' (empty - no country limitation)
    */
-  public function GetAllZones($sortby = 'offset', $sortdir = 'asc') {
+  public function GetAllZones($sortby = 'offset', $sortdir = 'asc', $onlycountry = '') {
     $sortby = strtolower($sortby);
     $validSortby = array(
       'time_zone',
@@ -79,7 +85,24 @@ class TimeZoneCity {
     if (!in_array($sortdir, $validSortdir)) {
       throw new Exception('Illegal value argument sortdir');
     }
-    $sql = "SELECT * FROM `timezonecity` WHERE 1 ORDER BY `". mysqli_real_escape_string($this->dbresource, $sortby) ."` ". mysqli_real_escape_string($this->dbresource, $sortdir) .";";
+    if (!is_string($onlycountry)) {
+      throw new Exception('Argument onlycountry must be a string');
+    }
+    #------------------------------------------------------
+    if (!empty($onlycountry)) {
+      $onlyArr = explode(',', $onlycountry);
+      foreach ($onlyArr as $k => $v) {
+        if (strlen($v) != 2) {
+          throw new Exception('Illegal value argument onlycountry');
+        }
+        $onlyArr[$k] = "`country_code`='". mysqli_real_escape_string($this->dbresource, strtoupper($v)) ."'";
+      }
+      $onlyStr = implode(' OR ', $onlyArr);
+      $sql = "SELECT * FROM `timezonecity` WHERE ". $onlyStr ." ORDER BY `". mysqli_real_escape_string($this->dbresource, $sortby) ."` ". mysqli_real_escape_string($this->dbresource, $sortdir) .";";
+    }
+    else {
+      $sql = "SELECT * FROM `timezonecity` ORDER BY `". mysqli_real_escape_string($this->dbresource, $sortby) ."` ". mysqli_real_escape_string($this->dbresource, $sortdir) .";";
+    }
     $result = mysqli_query($this->dbresource, $sql);
     if ($result === false) {
       throw new Exception('Error executing SQL query');

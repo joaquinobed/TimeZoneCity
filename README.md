@@ -1,10 +1,19 @@
 # Time Zone City
 
-Everything you need for working with timezones and world time. Each zone includes these details:
+This PHP timezone library --
+* generates HTML code for timezone select with customizable configuration
+* detects nearest timezone for given coordinates
+* validates a timezone
+* returns time offset in seconds for given timezone
+* returns information for given timezone
+* tells whether DST is observed
+* returns Google Maps API `place_id` for given timezone
+
+Each zone includes these details:
 * timezone
 * offset in hours (useful for sorting)
 * place name
-* Google Maps API place_id (useful for translation of place name)
+* Google Maps API `place_id` (useful for translation of place name)
 * region code
 * region name
 * country code
@@ -65,9 +74,44 @@ mysqli_set_charset($link, "utf8mb4");
 $zoneObj = new TimeZoneCity;
 $zoneObj->dbresource = $link;
 
+#-----------------------------------------------------------------------
+# All world timezones
+
 echo '<select>';
 
 $zones = $zoneObj->GetAllZones(); # Advanced sorting is possible!
+
+foreach ($zones as $key => $val) {
+  if ($val['offset'] >= 0) {
+    $val['offset'] = '+'. $val['offset'];
+  }
+  echo '<option value="'. $val['time_zone'] .'">(UTC'. $val['offset'] .':00)'. $val['place_name'] .', '. $val['country_name'] .'</option>';
+}
+
+echo '</select>';
+
+#-----------------------------------------------------------------------
+# Only US timezones
+
+echo '<select>';
+
+$zones = $zoneObj->GetAllZones('offset', 'desc', 'us'));
+
+foreach ($zones as $key => $val) {
+  if ($val['offset'] >= 0) {
+    $val['offset'] = '+'. $val['offset'];
+  }
+  echo '<option value="'. $val['time_zone'] .'">(UTC'. $val['offset'] .':00)'. $val['place_name'] .', '. $val['country_name'] .'</option>';
+}
+
+echo '</select>';
+
+#-----------------------------------------------------------------------
+# Only US and Canadian timezones
+
+echo '<select>';
+
+$zones = $zoneObj->GetAllZones('offset', 'desc', 'us,ca'));
 
 foreach ($zones as $key => $val) {
   if ($val['offset'] >= 0) {
