@@ -3,7 +3,7 @@
  * Time Zone City
  * Everything you need for working with timezones and world time.
  *
- * @version    0.6 (2017-07-24 00:35:00 GMT)
+ * @version    0.7 (2017-07-24 02:19:00 GMT)
  * @author     Peter Kahl <peter.kahl@colossalmind.com>
  * @copyright  2017 Peter Kahl
  * @license    Apache License, Version 2.0
@@ -48,6 +48,7 @@ class TimeZoneCity {
    *          -- 'country_name'
    *          -- 'latitude'
    *          -- 'longitude'
+   *      OR multiple codes separated by comma
    *
    * @var sortdir ........ string
    *      Admissible values:
@@ -60,7 +61,7 @@ class TimeZoneCity {
    *          -- 'us,ca,mx'
    *          -- '' (empty - no country limitation)
    */
-  public function GetAllZones($sortby = 'offset', $sortdir = 'asc', $onlycountry = '') {
+  public function GetAllZones($sortby = 'offset,place_name', $sortdir = 'asc', $onlycountry = '') {
     $sortby = strtolower($sortby);
     $validSortby = array(
       'time_zone',
@@ -74,9 +75,15 @@ class TimeZoneCity {
       'latitude',
       'longitude',
     );
-    if (!in_array($sortby, $validSortby)) {
-      throw new Exception('Illegal value argument sortby');
+    $sortbyArr = explode(',', $sortby);
+    foreach ($sortbyArr as $k => $v) {
+      if (!in_array($v, $validSortby)) {
+        throw new Exception('Illegal value argument sortby');
+      }
+      $sortbyArr[$k] = "`". mysqli_real_escape_string($this->dbresource, $v) ."`";
     }
+    $sortbyStr = implode(', ', $sortbyArr);
+    #----
     $sortdir = strtoupper($sortdir);
     $validSortdir = array(
       'ASC',
@@ -98,10 +105,10 @@ class TimeZoneCity {
         $onlyArr[$k] = "`country_code`='". mysqli_real_escape_string($this->dbresource, strtoupper($v)) ."'";
       }
       $onlyStr = implode(' OR ', $onlyArr);
-      $sql = "SELECT * FROM `timezonecity` WHERE ". $onlyStr ." ORDER BY `". mysqli_real_escape_string($this->dbresource, $sortby) ."` ". mysqli_real_escape_string($this->dbresource, $sortdir) .";";
+      $sql = "SELECT * FROM `timezonecity` WHERE ". $onlyStr ." ORDER BY ". $sortbyStr ." ". mysqli_real_escape_string($this->dbresource, $sortdir) .";";
     }
     else {
-      $sql = "SELECT * FROM `timezonecity` ORDER BY `". mysqli_real_escape_string($this->dbresource, $sortby) ."` ". mysqli_real_escape_string($this->dbresource, $sortdir) .";";
+      $sql = "SELECT * FROM `timezonecity` ORDER BY ". $sortbyStr ." ". mysqli_real_escape_string($this->dbresource, $sortdir) .";";
     }
     $result = mysqli_query($this->dbresource, $sql);
     if ($result === false) {
