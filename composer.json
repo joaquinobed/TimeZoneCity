@@ -1,8 +1,8 @@
 {
     "name": "peterkahl/time-zone-city",
     "type": "library",
-    "description": "Everything you need for working with timezones and world time.",
-    "keywords": ["time-zones", "google-maps-api", "time-zone-table", "html-generation", "datetime", "date", "time"],
+    "description": "Generates HTML code for timezone select with customizable configuration. Detects nearest timezone for given coordinates. And more!",
+    "keywords": ["time-zones", "timezone-select", "google-maps-api", "time-zone-table", "html-generation", "datetime", "date", "time"],
     "homepage": "https://github.com/peterkahl/TimeZoneCity",
     "license": "Apache License Version 2.0",
     "authors": [
