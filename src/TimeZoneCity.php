@@ -3,7 +3,7 @@
  * Time Zone City
  * Everything you need for working with timezones and world time.
  *
- * @version    0.8 (2017-07-24 09:46:00 GMT)
+ * @version    0.9 (2017-07-26 08:59:00 GMT)
  * @author     Peter Kahl <peter.kahl@colossalmind.com>
  * @copyright  2017 Peter Kahl
  * @license    Apache License, Version 2.0
@@ -107,27 +107,28 @@ class TimeZoneCity {
       }
       $sortbyStr .= ', `'. $v .'` '. $sortdirArr[$k];
     }
+    $sortbyStr = trim($sortbyStr, ', ');
 
     if (!is_string($onlycountry)) {
       throw new Exception('Argument onlycountry must be a string');
     }
 
     if (!empty($onlycountry)) {
-      $onlyArr = explode(',', $onlycountry);
+      $onlyArr = explode(',', strtoupper($onlycountry));
       foreach ($onlyArr as $k => $v) {
         if (strlen($v) != 2) {
           throw new Exception('Illegal value argument onlycountry');
         }
-        $onlyArr[$k] = "`country_code`='". mysqli_real_escape_string($this->dbresource, strtoupper($v)) ."'";
+        $onlyArr[$k] = "`country_code`='". mysqli_real_escape_string($this->dbresource, $v) ."'";
       }
       $onlyStr = implode(' OR ', $onlyArr);
     }
 
     if (!empty($onlycountry)) {
-      $sql = "SELECT * FROM `timezonecity` WHERE ". $onlyStr ." ORDER BY ". trim($sortbyStr, ', ') .";";
+      $sql = "SELECT * FROM `timezonecity` WHERE ". $onlyStr ." ORDER BY ". $sortbyStr .";";
     }
     else {
-      $sql = "SELECT * FROM `timezonecity` ORDER BY ". trim($sortbyStr, ', ') .";";
+      $sql = "SELECT * FROM `timezonecity` ORDER BY ". $sortbyStr .";";
     }
 
     $result = mysqli_query($this->dbresource, $sql);

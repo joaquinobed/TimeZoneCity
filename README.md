@@ -1,8 +1,8 @@
 # Time Zone City
 
 This PHP timezone library --
-* generates HTML code for timezone select with customizable configuration
 * detects nearest timezone for given coordinates
+* generates HTML code for timezone select with customizable configuration
 * validates a timezone
 * returns time offset in seconds for given timezone
 * returns information for given timezone
@@ -56,7 +56,7 @@ echo $zoneObj->GetNearestZone($country, $latitude, $longitude); # Asia/Macau
 # Example when country code is erorrneous.
 
 $country   = 'DE';
-$latitude  = 22.27; # Coordintaes are near Macau; can't be Germany!
+$latitude  = 22.27; # Coordinates are near Macau; can't be Germany!
 $longitude = 113.79;
 
 echo $zoneObj->GetNearestZone($country, $latitude, $longitude); # Asia/Macau
