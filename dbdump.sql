@@ -1,6 +1,6 @@
 --
 -- Time Zone City
--- Version Date: 2017-07-23 11:27:00 GMT
+-- Version Date: 2017-07-26 23:59:00 GMT
 --
 -- Copyright 2017 Peter Kahl <peter.kahl@colossalmind.com>
 --
@@ -30,6 +30,10 @@ CREATE TABLE `timezonecity` (
   `latitude` double NOT NULL,
   `longitude` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `timezonecity`
+--
 
 INSERT INTO `timezonecity` (`time_zone`, `offset`, `place_name`, `place_id`, `region_code`, `region_name`, `country_code`, `country_name`, `latitude`, `longitude`) VALUES
 ('Africa/Abidjan', 0, 'Abidjan', 'ChIJIZGVEVPqwQ8RpiGS4dwN5z8', '', '', 'CI', 'Côte d\'Ivoire', 5.3599517, -4.0082563),
@@ -89,17 +93,17 @@ INSERT INTO `timezonecity` (`time_zone`, `offset`, `place_name`, `place_id`, `re
 ('America/Anguilla', -4, 'Anguilla', 'ChIJ5QHvjnRjDowRgdTghNNqnTs', '', '', 'AI', 'Anguilla', 18.220554, -63.068615),
 ('America/Antigua', -4, 'Antigua and Barbuda', 'ChIJwdG4bbluDYwRlHmL4Yg3aic', '', '', 'AG', 'Antigua and Barbuda', 17.060816, -61.796428),
 ('America/Araguaina', -3, 'Araguaína', 'ChIJ-0-MXd4N2ZIR_MRN5hXoMEo', 'TO', 'State of Tocantins', 'BR', 'Brazil', -7.1927733, -48.20483),
-('America/Argentina/Buenos_Aires', -3, 'Buenos Aires', 'ChIJvQz5TjvKvJURh47oiC6Bs6A', '', 'Buenos Aires Province', 'AR', 'Argentina', -34.6036844, -58.3815591),
-('America/Argentina/Catamarca', -3, 'Catamarca', 'ChIJzZ8PHb8oJJQRGoYJFkvdHn4', '', 'Catamarca Province', 'AR', 'Argentina', -28.469581, -65.7795441),
-('America/Argentina/Cordoba', -3, 'Córdoba', 'ChIJaVuPR1-YMpQRkrBmU5pPorA', '', 'Cordoba Province', 'AR', 'Argentina', -31.4200833, -64.1887761),
-('America/Argentina/Jujuy', -3, 'San Salvador de Jujuy', 'ChIJhwBc5_ahBJQReU7OMLKRXoE', '', 'Jujuy Province', 'AR', 'Argentina', -24.1843397, -65.302177),
-('America/Argentina/La_Rioja', -3, 'La Rioja', 'ChIJ5feWM4fZJ5QRysdyiTScHD4', '', 'La Rioja Province', 'AR', 'Argentina', -29.4134538, -66.8564579),
-('America/Argentina/Mendoza', -3, 'Mendoza', 'ChIJv3lRxD4JfpYROvoO0vZ4WiA', '', 'Mendoza Province', 'AR', 'Argentina', -32.8894587, -68.8458386),
-('America/Argentina/Rio_Gallegos', -3, 'Río Gallegos', 'ChIJ5WYcslL5tr0RAnFkR_JBfKs', '', 'Santa Cruz Province', 'AR', 'Argentina', -51.6230485, -69.2168291),
-('America/Argentina/Salta', -3, 'Salta', 'ChIJ-bdRUaPDG5QRBvKH1SyZzaU', '', 'Salta Province', 'AR', 'Argentina', -24.7821269, -65.4231976),
-('America/Argentina/San_Juan', -3, 'San Juan', 'ChIJl9Q8oylAgZYRs_w8I6Cj878', '', 'San Juan Province', 'AR', 'Argentina', -31.5351074, -68.5385941),
-('America/Argentina/San_Luis', -3, 'San Luis', 'ChIJzaZsGVQ51JURg8ye1LTjwn8', '', 'San Luis Province', 'AR', 'Argentina', -33.3017267, -66.3377522),
-('America/Argentina/Tucuman', -3, 'San Miguel de Tucumán', 'ChIJA2nF1pI3IpQRJ2XFtZJbjfg', '', 'Tucumán Province', 'AR', 'Argentina', -26.8082848, -65.2175903),
+('America/Argentina/Buenos_Aires', -3, 'Buenos Aires', 'ChIJvQz5TjvKvJURh47oiC6Bs6A', '', 'Buenos Aires', 'AR', 'Argentina', -34.6036844, -58.3815591),
+('America/Argentina/Catamarca', -3, 'Catamarca', 'ChIJzZ8PHb8oJJQRGoYJFkvdHn4', '', 'Catamarca', 'AR', 'Argentina', -28.469581, -65.7795441),
+('America/Argentina/Cordoba', -3, 'Córdoba', 'ChIJaVuPR1-YMpQRkrBmU5pPorA', '', 'Cordoba', 'AR', 'Argentina', -31.4200833, -64.1887761),
+('America/Argentina/Jujuy', -3, 'San Salvador de Jujuy', 'ChIJhwBc5_ahBJQReU7OMLKRXoE', '', 'Jujuy', 'AR', 'Argentina', -24.1843397, -65.302177),
+('America/Argentina/La_Rioja', -3, 'La Rioja', 'ChIJ5feWM4fZJ5QRysdyiTScHD4', '', 'La Rioja', 'AR', 'Argentina', -29.4134538, -66.8564579),
+('America/Argentina/Mendoza', -3, 'Mendoza', 'ChIJv3lRxD4JfpYROvoO0vZ4WiA', '', 'Mendoza', 'AR', 'Argentina', -32.8894587, -68.8458386),
+('America/Argentina/Rio_Gallegos', -3, 'Río Gallegos', 'ChIJ5WYcslL5tr0RAnFkR_JBfKs', '', 'Santa Cruz', 'AR', 'Argentina', -51.6230485, -69.2168291),
+('America/Argentina/Salta', -3, 'Salta', 'ChIJ-bdRUaPDG5QRBvKH1SyZzaU', '', 'Salta', 'AR', 'Argentina', -24.7821269, -65.4231976),
+('America/Argentina/San_Juan', -3, 'San Juan', 'ChIJl9Q8oylAgZYRs_w8I6Cj878', '', 'San Juan', 'AR', 'Argentina', -31.5351074, -68.5385941),
+('America/Argentina/San_Luis', -3, 'San Luis', 'ChIJzaZsGVQ51JURg8ye1LTjwn8', '', 'San Luis', 'AR', 'Argentina', -33.3017267, -66.3377522),
+('America/Argentina/Tucuman', -3, 'San Miguel de Tucumán', 'ChIJA2nF1pI3IpQRJ2XFtZJbjfg', '', 'Tucumán', 'AR', 'Argentina', -26.8082848, -65.2175903),
 ('America/Argentina/Ushuaia', -3, 'Ushuaia', 'ChIJvwnRurUiTLwR_OtDuj1HmFQ', '', 'Tierra del Fuego', 'AR', 'Argentina', -54.8019121, -68.3029511),
 ('America/Aruba', -4, 'Oranjestad', 'ChIJN4q-Qds4hY4Ro2I-jCDbM00', '', '', 'AW', 'Aruba', 12.5092044, -70.0086306),
 ('America/Asuncion', -3, 'Asunción', 'ChIJ9dtpbgeoXZQRyTYZv0Z666w', '', '', 'PY', 'Paraguay', -25.2637399, -57.575926),
@@ -242,7 +246,6 @@ INSERT INTO `timezonecity` (`time_zone`, `offset`, `place_name`, `place_id`, `re
 ('Antarctica/Troll', 0, 'Troll Station', '', '', '', 'AQ', 'Antarctica', -72.0041, 2.3206),
 ('Antarctica/Vostok', 6, 'Vostok Station', '', '', '', 'AQ', 'Antarctica', -78.24, 106.54),
 ('Arctic/Longyearbyen', 1, 'Longyearbyen', 'ChIJ31dFT9hSnEUR7JVkocqyhto', '', '', 'SJ', 'Svalbard and Jan Mayen', 78.2231722, 15.626723),
-('Asia/', 7, 'Bangkok', 'ChIJ82ENKDJgHTERIEjiXbIAAQE', '', '', 'TH', 'Thailand', 13.7563309, 100.5017651),
 ('Asia/Aden', 3, 'Aden', 'ChIJL8JeUdYcHhYR6W9pI8OzX5Q', '', '', 'YE', 'Yemen', 12.7854969, 45.0186548),
 ('Asia/Almaty', 6, 'Almaty', 'ChIJq8vFFn1ugzgRdm2YrY9mRD0', '', '', 'KZ', 'Kazakhstan', 43.2220146, 76.8512485),
 ('Asia/Amman', 2, 'Amman', 'ChIJr4F5XbhfGxUR6GXc-MAwHGM', '', '', 'JO', 'Jordan', 31.9453666, 35.9283716),
@@ -253,6 +256,7 @@ INSERT INTO `timezonecity` (`time_zone`, `offset`, `place_name`, `place_id`, `re
 ('Asia/Baghdad', 3, 'Baghdad', 'ChIJk0GnoGd_VxURLG-xo9Kp7Z0', '', '', 'IQ', 'Iraq', 33.3128057, 44.3614875),
 ('Asia/Bahrain', 3, 'Manama', 'ChIJLaZ2J3KvST4RwmAPB6Y4Z4s', '', '', 'BH', 'Bahrain', 26.2285161, 50.5860497),
 ('Asia/Baku', 4, 'Baku', 'ChIJ-Rwh1mt9MEARa2zlel5rPzQ', '', '', 'AZ', 'Azerbaijan', 40.4092617, 49.8670924),
+('Asia/Bangkok', 7, 'Bangkok', 'ChIJ82ENKDJgHTERIEjiXbIAAQE', '', '', 'TH', 'Thailand', 13.7563309, 100.5017651),
 ('Asia/Beirut', 2, 'Beirut', 'ChIJj6eAWCEXHxURtDaY6bqCkXI', '', '', 'LB', 'Lebanon', 33.8937913, 35.5017767),
 ('Asia/Bishkek', 6, 'Bishkek', 'ChIJgcizkdy3njgRfeLefPW6Lkk', '', '', 'KG', 'Kyrgyzstan', 42.8746212, 74.5697617),
 ('Asia/Brunei', 8, 'Brunei', '', '', '', 'BN', 'Brunei', 4.535277, 114.727669),
@@ -434,9 +438,9 @@ INSERT INTO `timezonecity` (`time_zone`, `offset`, `place_name`, `place_id`, `re
 ('Pacific/Marquesas', -9, 'Marquesas Islands', 'ChIJbaR5OmrmNXYRjrl-CTmvpxY', '', '', 'PF', 'French Polynesia', -9.7812162, -139.0817124),
 ('Pacific/Midway', -11, 'Midway Atoll', 'ChIJ23lRopYiuHwRa_7afAuJff0', '', '', 'US', 'United States', 28.2072168, -177.3734926),
 ('Pacific/Nauru', 12, 'Nauru', 'ChIJTVvkHR8cfW8RgQrUxfSd2Vk', '', '', 'NR', 'Nauru', -0.522778, 166.931503),
-('Pacific/Niue', -11, 'Niue', 'ChIJO7duNyolnXERGIvcezR4QpE', '', '', 'NU', 'Niue', -19.054445, -169.867233);
+('Pacific/Niue', -11, 'Niue', 'ChIJO7duNyolnXERGIvcezR4QpE', '', '', 'NU', 'Niue', -19.054445, -169.867233),
+('Pacific/Norfolk', 11, 'Norfolk Island', 'ChIJOcm6rR_RS2wRUhVdMyOYerk', '', '', 'NF', 'Norfolk Island', -29.040835, 167.954712);
 INSERT INTO `timezonecity` (`time_zone`, `offset`, `place_name`, `place_id`, `region_code`, `region_name`, `country_code`, `country_name`, `latitude`, `longitude`) VALUES
-('Pacific/Norfolk', 11, 'Norfolk Island', 'ChIJOcm6rR_RS2wRUhVdMyOYerk', '', '', 'NF', 'Norfolk Island', -29.040835, 167.954712),
 ('Pacific/Noumea', 11, 'Noumea', 'ChIJyzIaP2niJ2wRAN0S8yqy8Xs', '', '', 'NC', 'New Caledonia', -22.2558234, 166.4505243),
 ('Pacific/Pago_Pago', -11, 'Pago Pago', 'ChIJyf1IkreEpnERK0EVzuwzjjU', '', '', 'US', 'United States', -14.2756319, -170.7020359),
 ('Pacific/Palau', 9, 'Palau', 'ChIJmQOvorRFhDIRu-uhOd0e7RI', '', '', 'PW', 'Palau', 7.759268, 134.6465868),
@@ -451,10 +455,17 @@ INSERT INTO `timezonecity` (`time_zone`, `offset`, `place_name`, `place_id`, `re
 ('Pacific/Wake', 12, 'Wake Island', '', '', '', 'US', 'United States', 19.279619, 166.6499348),
 ('Pacific/Wallis', 12, 'Wallis Island', 'ChIJP-esslKyyHERTGce8jDkbVY', '', '', 'WF', 'Wallis and Futuna', -13.2959105, -176.2056843);
 
+--
+-- Indexes for dumped tables
+--
 
+--
+-- Indexes for table `timezonecity`
+--
 ALTER TABLE `timezonecity`
   ADD UNIQUE KEY `time_zone_2` (`time_zone`),
   ADD KEY `time_zone` (`time_zone`);
 COMMIT;
+
 
 
