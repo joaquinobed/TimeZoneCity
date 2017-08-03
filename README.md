@@ -82,13 +82,16 @@ echo '<select>'."\n";
 $zones = $zoneObj->GetAllZones(); # Advanced sorting is possible!
 
 foreach ($zones as $key => $val) {
-  if ($val['offset'] >= 0) {
-    $val['offset'] = '+'. str_pad($val['offset'], 2, '0', STR_PAD_LEFT);
+  $val['offset'] = number_format($val['offset'], 2, '.', '');
+  list($hours, $decimal) = explode('.', $val['offset']);
+  $minutes = str_pad(substr(trim('.'. $decimal * 60, '.'), 0, 2), 2, '0', STR_PAD_RIGHT);
+  if ($hours >= 0) {
+    $hours = '+'. str_pad($hours, 2, '0', STR_PAD_LEFT);
   }
   else {
-    $val['offset'] = '-'. str_pad(trim($val['offset'], '-'), 2, '0', STR_PAD_LEFT);
+    $hours = '-'. str_pad(trim($hours, '-'), 2, '0', STR_PAD_LEFT);
   }
-  echo '  <option value="'. $val['time_zone'] .'">(UTC'. $val['offset'] .':00) '. $val['place_name'] .', '. $val['country_name'] .'</option>'."\n";
+  echo '  <option value="'. $val['time_zone'] .'">(UTC'. $hours .':'. $minutes .') '. $val['place_name'] .', '. $val['country_name'] .'</option>'."\n";
 }
 
 echo '</select>'."\n";
@@ -103,11 +106,14 @@ $currentZone = 'America/Los_Angeles';
 echo '<select>'."\n";
 
 foreach ($zones as $key => $val) {
-  if ($val['offset'] >= 0) {
-    $val['offset'] = '+'. str_pad($val['offset'], 2, '0', STR_PAD_LEFT);
+  $val['offset'] = number_format($val['offset'], 2, '.', '');
+  list($hours, $decimal) = explode('.', $val['offset']);
+  $minutes = str_pad(substr(trim('.'. $decimal * 60, '.'), 0, 2), 2, '0', STR_PAD_RIGHT);
+  if ($hours >= 0) {
+    $hours = '+'. str_pad($hours, 2, '0', STR_PAD_LEFT);
   }
   else {
-    $val['offset'] = '-'. str_pad(trim($val['offset'], '-'), 2, '0', STR_PAD_LEFT);
+    $hours = '-'. str_pad(trim($hours, '-'), 2, '0', STR_PAD_LEFT);
   }
   $place = array();
   $place[] = $val['place_name'];
@@ -119,7 +125,7 @@ foreach ($zones as $key => $val) {
   if ($currentZone == $val['time_zone']) {
     echo ' selected';
   }
-  echo '>(UTC'. $val['offset'] .':00) '. $place .'</option>'."\n";
+  echo '>(UTC'. $hours .':'. $minutes .') '. $place .'</option>'."\n";
 }
 
 echo '</select>'."\n";
@@ -173,11 +179,14 @@ $currentZone = 'America/Los_Angeles';
 echo '<select>'."\n";
 
 foreach ($zones as $key => $val) {
-  if ($val['offset'] >= 0) {
-    $val['offset'] = '+'. str_pad($val['offset'], 2, '0', STR_PAD_LEFT);
+  $val['offset'] = number_format($val['offset'], 2, '.', '');
+  list($hours, $decimal) = explode('.', $val['offset']);
+  $minutes = str_pad(substr(trim('.'. $decimal * 60, '.'), 0, 2), 2, '0', STR_PAD_RIGHT);
+  if ($hours >= 0) {
+    $hours = '+'. str_pad($hours, 2, '0', STR_PAD_LEFT);
   }
   else {
-    $val['offset'] = '-'. str_pad(trim($val['offset'], '-'), 2, '0', STR_PAD_LEFT);
+    $hours = '-'. str_pad(trim($hours, '-'), 2, '0', STR_PAD_LEFT);
   }
   $place = array();
   $place[] = $val['place_name'];
@@ -189,7 +198,7 @@ foreach ($zones as $key => $val) {
   if ($currentZone == $val['time_zone']) {
     echo ' selected';
   }
-  echo '>(UTC'. $val['offset'] .':00) '. $place .'</option>'."\n";
+  echo '>(UTC'. $hours .':'. $minutes .') '. $place .'</option>'."\n";
 }
 
 echo '</select>'."\n";
