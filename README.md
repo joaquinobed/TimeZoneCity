@@ -103,6 +103,7 @@ foreach ($zones as $key => $val) {
   $place[] = $val['region_code'];
   #$place[] = $val['country_name'];
   $place = array_filter($place);
+  $place = array_unique($place);
   $place = implode(', ', $place);
   echo '  <option value="'. $val['time_zone'] .'"';
   if ($currentZone == $val['time_zone']) {
@@ -167,6 +168,7 @@ foreach ($zones as $key => $val) {
   $place[] = $val['region_code'];
   $place[] = $val['country_name'];
   $place = array_filter($place);
+  $place = array_unique($place);
   $place = implode(', ', $place);
   echo '  <option value="'. $val['time_zone'] .'"';
   if ($currentZone == $val['time_zone']) {
