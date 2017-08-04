@@ -3,7 +3,7 @@
  * Time Zone City
  * Everything you need for working with timezones and world time.
  *
- * @version    1.1 (2017-08-03 22:51:00 GMT)
+ * @version    2.0 (2017-08-04 09:49:00 GMT)
  * @author     Peter Kahl <peter.kahl@colossalmind.com>
  * @copyright  2017 Peter Kahl
  * @license    Apache License, Version 2.0
@@ -138,8 +138,11 @@ class TimeZoneCity {
     }
 
     $arr = array();
+    $n = 0;
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-      $arr[] = $row;
+      $arr[$n] = $row;
+      $arr[$n]['offset_formatted'] = $this->ReadableOffset($arr[$n]['offset']);
+      $n++;
     }
     return $arr;
   }
@@ -175,7 +178,9 @@ class TimeZoneCity {
       throw new Exception('Error executing SQL query');
     }
     if (mysqli_num_rows($result) > 0) {
-      return mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $arr = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $arr['offset_formatted'] = $this->ReadableOffset($arr['offset']);
+      return $arr;
     }
     return array();
   }
@@ -240,6 +245,25 @@ class TimeZoneCity {
         return $trans[$k-1]['isdst'];
       }
     }
+  }
+
+  #===================================================================
+
+  /**
+   * Converts offset in hours and decimal fractions into 'H:m' format.
+   *
+   */
+  private function ReadableOffset($offset) {
+    $offset = number_format($offset, 2, '.', '');
+    list($hours, $decimal) = explode('.', $offset);
+    $minutes = str_pad(substr(trim('.'. $decimal * 60, '.'), 0, 2), 2, '0', STR_PAD_RIGHT);
+    if ($hours >= 0) {
+      $hours = '+'. str_pad($hours, 2, '0', STR_PAD_LEFT);
+    }
+    else {
+      $hours = '-'. str_pad(trim($hours, '-'), 2, '0', STR_PAD_LEFT);
+    }
+    return $hours .':'. $minutes;
   }
 
   #===================================================================

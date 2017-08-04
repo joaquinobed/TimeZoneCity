@@ -12,6 +12,7 @@ This PHP timezone library --
 Each zone includes these details:
 * timezone
 * offset in hours (useful for sorting)
+* offset formatted for SELECT html
 * place name
 * Google Maps API `place_id` (useful for translation of place name)
 * region code
@@ -82,16 +83,7 @@ echo '<select>'."\n";
 $zones = $zoneObj->GetAllZones(); # Advanced sorting is possible!
 
 foreach ($zones as $key => $val) {
-  $val['offset'] = number_format($val['offset'], 2, '.', '');
-  list($hours, $decimal) = explode('.', $val['offset']);
-  $minutes = str_pad(substr(trim('.'. $decimal * 60, '.'), 0, 2), 2, '0', STR_PAD_RIGHT);
-  if ($hours >= 0) {
-    $hours = '+'. str_pad($hours, 2, '0', STR_PAD_LEFT);
-  }
-  else {
-    $hours = '-'. str_pad(trim($hours, '-'), 2, '0', STR_PAD_LEFT);
-  }
-  echo '  <option value="'. $val['time_zone'] .'">(UTC'. $hours .':'. $minutes .') '. $val['place_name'] .', '. $val['country_name'] .'</option>'."\n";
+  echo '  <option value="'. $val['time_zone'] .'">(UTC'. $val['offset_formatted'] .') '. $val['place_name'] .', '. $val['country_name'] .'</option>'."\n";
 }
 
 echo '</select>'."\n";
@@ -106,15 +98,6 @@ $currentZone = 'America/Los_Angeles';
 echo '<select>'."\n";
 
 foreach ($zones as $key => $val) {
-  $val['offset'] = number_format($val['offset'], 2, '.', '');
-  list($hours, $decimal) = explode('.', $val['offset']);
-  $minutes = str_pad(substr(trim('.'. $decimal * 60, '.'), 0, 2), 2, '0', STR_PAD_RIGHT);
-  if ($hours >= 0) {
-    $hours = '+'. str_pad($hours, 2, '0', STR_PAD_LEFT);
-  }
-  else {
-    $hours = '-'. str_pad(trim($hours, '-'), 2, '0', STR_PAD_LEFT);
-  }
   $place = array();
   $place[] = $val['place_name'];
   $place[] = $val['region_code'];
@@ -125,7 +108,7 @@ foreach ($zones as $key => $val) {
   if ($currentZone == $val['time_zone']) {
     echo ' selected';
   }
-  echo '>(UTC'. $hours .':'. $minutes .') '. $place .'</option>'."\n";
+  echo '>(UTC'. $val['offset_formatted'] .') '. $place .'</option>'."\n";
 }
 
 echo '</select>'."\n";
@@ -179,15 +162,6 @@ $currentZone = 'America/Los_Angeles';
 echo '<select>'."\n";
 
 foreach ($zones as $key => $val) {
-  $val['offset'] = number_format($val['offset'], 2, '.', '');
-  list($hours, $decimal) = explode('.', $val['offset']);
-  $minutes = str_pad(substr(trim('.'. $decimal * 60, '.'), 0, 2), 2, '0', STR_PAD_RIGHT);
-  if ($hours >= 0) {
-    $hours = '+'. str_pad($hours, 2, '0', STR_PAD_LEFT);
-  }
-  else {
-    $hours = '-'. str_pad(trim($hours, '-'), 2, '0', STR_PAD_LEFT);
-  }
   $place = array();
   $place[] = $val['place_name'];
   $place[] = $val['region_code'];
@@ -198,7 +172,7 @@ foreach ($zones as $key => $val) {
   if ($currentZone == $val['time_zone']) {
     echo ' selected';
   }
-  echo '>(UTC'. $hours .':'. $minutes .') '. $place .'</option>'."\n";
+  echo '>(UTC'. $val['offset_formatted'] .') '. $place .'</option>'."\n";
 }
 
 echo '</select>'."\n";
@@ -297,11 +271,13 @@ $city = $zoneObj->RemoveAccents($info['place_name']); # Sao Tome and Principe
 var_dump($info);
 
 /*
-array(10) {
+array(11) {
   ["time_zone"]=>
   string(15) "Africa/Sao_Tome"
   ["offset"]=>
   string(1) "0"
+  ["offset_formatted"]=>
+  string(6) "+00:00"
   ["place_name"]=>
   string(24) "São Tomé and Príncipe"
   ["place_id"]=>
