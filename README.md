@@ -78,12 +78,25 @@ $zoneObj->dbresource = $link;
 #-----------------------------------------------------------------------
 # All world timezones
 
-echo '<select>'."\n";
-
 $zones = $zoneObj->GetAllZones(); # Advanced sorting is possible!
 
+$currentZone = 'America/Los_Angeles';
+
+echo '<select>'."\n";
+
 foreach ($zones as $key => $val) {
-  echo '  <option value="'. $val['time_zone'] .'">(UTC'. $val['offset_formatted'] .') '. $val['place_name'] .', '. $val['country_name'] .'</option>'."\n";
+  $place = array();
+  $place[] = $val['place_name'];
+  $place[] = $val['region_code'];
+  $place[] = $val['country_name'];
+  $place = array_filter($place);
+  $place = array_unique($place);
+  $place = implode(', ', $place);
+  echo '  <option value="'. $val['time_zone'] .'"';
+  if ($currentZone == $val['time_zone']) {
+    echo ' selected';
+  }
+  echo '>(UTC'. $val['offset_formatted'] .') '. $place .'</option>'."\n";
 }
 
 echo '</select>'."\n";
