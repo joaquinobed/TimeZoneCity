@@ -4,7 +4,7 @@
     "description": "Detects nearest timezone for given coordinates. Generates HTML code for timezone select with customizable configuration. And more!",
     "keywords": ["time-zones", "timezone-select", "google-maps-api", "time-zone-table", "html-generation", "datetime", "date", "time"],
     "homepage": "https://github.com/peterkahl/TimeZoneCity",
-    "license": "Apache License Version 2.0",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "Peter Kahl",
