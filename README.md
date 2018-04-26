@@ -1,5 +1,7 @@
 # Time Zone City
 
+[![If this project has business value for you then don't hesitate to support me with a small donation.](https://img.shields.io/badge/Donations-via%20Paypal-blue.svg)](https://www.paypal.me/PeterK93)
+
 This PHP timezone library --
 * detects nearest timezone for given coordinates
 * generates HTML code for timezone select with customizable configuration
