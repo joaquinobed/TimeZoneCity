@@ -12,6 +12,7 @@ This PHP timezone library --
 * returns information for given timezone
 * tells whether DST is observed
 * returns Google Maps API `place_id` for given timezone
+* returns abbreviation for given timezone (CEST, BST, GMT, EST)
 
 Each zone includes these details:
 * timezone
@@ -315,5 +316,20 @@ array(11) {
   string(17) "6.613080999999999"
 }
 */
+
+```
+
+Get 3-4 letter abbreviation of given time zone:
+```php
+use peterkahl\TimeZoneCity\TimeZoneCity;
+
+$link = mysqli_connect($DB_HOSTNAME, $DB_USERNAME, $DB_PASSWORD, $DB_DBNAME);
+
+mysqli_set_charset($link, "utf8mb4");
+
+$zoneObj = new TimeZoneCity;
+$zoneObj->dbresource = $link;
+
+echo $zoneObj->GetZoneAbbr('Europe/London'); # BST
 
 ```
