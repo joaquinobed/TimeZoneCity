@@ -2,7 +2,7 @@
 /**
  * Time Zone City
  *
- * @version    3.0 (2018-06-06 18:08:00 GMT)
+ * @version    4.0 (2018-09-26 05:07:00 GMT)
  * @author     Peter Kahl <https://github.com/peterkahl>
  * @copyright  2017-2018 Peter Kahl
  * @license    Apache License, Version 2.0
@@ -294,7 +294,7 @@ class TimeZoneCity {
   public function Sec2Readable($sec) {
     $hours   = floor(abs($sec)/3600);
     $minutes = floor((abs($sec) - $hours*3600)/60);
-    $sign = ($sec >= 0) ? '+' : '-';
+    $sign = ($sec >= 0) ? '+' : '';
     return $sign . str_pad($hours, 2, '0', STR_PAD_LEFT) . str_pad($minutes, 2, '0', STR_PAD_LEFT);
   }
 
@@ -310,13 +310,13 @@ class TimeZoneCity {
     list($hours, $decimal) = explode('.', $offset);
     $minutes = str_pad(substr(trim('.'. $decimal * 60, '.'), 0, 2), 2, '0', STR_PAD_RIGHT);
     $sign = ($hours >= 0) ? '+' : '-';
-    return $sign . str_pad($hours, 2, '0', STR_PAD_LEFT) .':'. $minutes;
+    return $sign . str_pad(abs($hours), 2, '0', STR_PAD_LEFT) .':'. $minutes;
   }
 
   #===================================================================
 
   /**
-   * Removes accents. Makes foreign words more fiendly.
+   * Removes accents. Makes foreign words look more friendly.
    * @param  string $str
    * @return string
    */
