@@ -4,21 +4,24 @@
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 [![If this project has business value for you then don't hesitate to support me with a small donation.](https://img.shields.io/badge/Donations-via%20Paypal-blue.svg)](https://www.paypal.me/PeterK93)
 
+Detects nearest timezone (and country etc.) for given coordinates and more!
+
 This PHP timezone library --
 * detects nearest timezone for given coordinates
+* detects nearest country for given coordinates
 * generates HTML code for timezone select with customizable configuration
-* validates a timezone
+* validates a timezone db name (e.g. 'Asia/Dubai')
 * returns time offset in seconds for given timezone
 * returns information for given timezone (see below 🎉)
 * returns Google Maps API `place_id` for given timezone
 * returns 3-5 character abbreviation for given timezone (CEST, BST, GMT, EST). This works where the native PHP DateTimeZone fails!
 
 Each zone includes these details:
-* timezone db name
-* 3-5 character abbreviation (both standard and daylight time) 🎉
-* full name of time zone (both standard and daylight time) 🎉
+* timezone db name (e.g. 'Asia/Dubai')
+* 3-5 character abbreviation (both standard and daylight time, e.g. 'PST' and 'PDT') 🎉
+* full name of time zone (both standard and daylight time, e.g. 'Pacific Standard Time' and 'Pacific Daylight Time') 🎉
 * offset in hours (both standard and daylight time; useful for sorting) 🎉
-* place name
+* place name (city)
 * Google Maps API `place_id` (useful for translation of place name)
 * region code
 * region name
@@ -27,21 +30,15 @@ Each zone includes these details:
 * latitude
 * longitude
 
----
-
 ## Upgrading from versions older than 2019-02-05
 
 The version released on 2019-02-05 is a major revamp with code improvements and database expansion. Make sure you import the database dump if your existing Time Zone City is older than 2019-02-05.
 
----
-
-## Alternative Time Zone Library
+### Alternative time zone library available!
 
 I have created an alternative library which is simpler, less versatile and does not use SQL database, but may do the job you need:
 
 [https://github.com/peterkahl/time-zone-name](https://github.com/peterkahl/time-zone-name)
-
----
 
 ## Usage
 
