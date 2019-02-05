@@ -1,7 +1,7 @@
 # Time Zone City
 
 [![Downloads](https://img.shields.io/packagist/dt/peterkahl/time-zone-city.svg)](https://packagist.org/packages/peterkahl/time-zone-city)
-[![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
+[![License](https://img.shields.io/github/license/peterkahl/time-zone-city.svg?logo=License)](https://github.com/peterkahl/time-zone-city/blob/master/LICENSE)
 [![If this project has business value for you then don't hesitate to support me with a small donation.](https://img.shields.io/badge/Donations-via%20Paypal-blue.svg)](https://www.paypal.me/PeterK93)
 
 This PHP timezone library --
@@ -9,15 +9,15 @@ This PHP timezone library --
 * generates HTML code for timezone select with customizable configuration
 * validates a timezone
 * returns time offset in seconds for given timezone
-* returns information for given timezone
-* tells whether DST is observed
+* returns information for given timezone (see below 🎉)
 * returns Google Maps API `place_id` for given timezone
-* returns abbreviation for given timezone (CEST, BST, GMT, EST)
+* returns 3-5 character abbreviation for given timezone (CEST, BST, GMT, EST). This works where the native PHP DateTimeZone fails!
 
 Each zone includes these details:
-* timezone
-* offset in hours (useful for sorting)
-* offset formatted for SELECT html
+* timezone db name
+* 3-5 character abbreviation (both standard and daylight time) 🎉
+* full name of time zone (both standard and daylight time) 🎉
+* offset in hours (both standard and daylight time; useful for sorting) 🎉
 * place name
 * Google Maps API `place_id` (useful for translation of place name)
 * region code
@@ -26,6 +26,20 @@ Each zone includes these details:
 * country name
 * latitude
 * longitude
+
+---
+
+## Upgrading from versions older than 2019-02-05
+
+The version released on 2019-02-05 is a major revamp with code improvements and database expansion. Make sure you import the database dump if your existing Time Zone City is older than 2019-02-05.
+
+---
+
+## Alternative Time Zone Library
+
+I have created an alternative library which is simpler, less versatile and does not use SQL database, but may do the job you need:
+
+[https://github.com/peterkahl/time-zone-name](https://github.com/peterkahl/time-zone-name)
 
 ---
 
@@ -101,7 +115,7 @@ foreach ($zones as $key => $val) {
   if ($currentZone == $val['time_zone']) {
     echo ' selected';
   }
-  echo '>(UTC'. $val['offset_formatted'] .') '. $place .'</option>'."\n";
+  echo '>(UTC'. $val['std_offset_formatted'] .') '. $place .'</option>'."\n";
 }
 
 echo '</select>'."\n";
@@ -109,7 +123,7 @@ echo '</select>'."\n";
 #-----------------------------------------------------------------------
 # Only US timezones
 
-$zones = $zoneObj->GetAllZones('offset,place_name', 'desc,asc', 'us');
+$zones = $zoneObj->GetAllZones('std_offset,place_name', 'desc,asc', 'us');
 
 $currentZone = 'America/Los_Angeles';
 
@@ -127,7 +141,7 @@ foreach ($zones as $key => $val) {
   if ($currentZone == $val['time_zone']) {
     echo ' selected';
   }
-  echo '>(UTC'. $val['offset_formatted'] .') '. $place .'</option>'."\n";
+  echo '>(UTC'. $val['std_offset_formatted'] .') '. $place .'</option>'."\n";
 }
 
 echo '</select>'."\n";
@@ -174,7 +188,7 @@ echo '</select>'."\n";
 #-----------------------------------------------------------------------
 # Only US and Canadian timezones
 
-$zones = $zoneObj->GetAllZones('offset,place_name', 'desc,asc', 'us,ca');
+$zones = $zoneObj->GetAllZones('std_offset,place_name', 'desc,asc', 'us,ca');
 
 $currentZone = 'America/Los_Angeles';
 
@@ -192,7 +206,7 @@ foreach ($zones as $key => $val) {
   if ($currentZone == $val['time_zone']) {
     echo ' selected';
   }
-  echo '>(UTC'. $val['offset_formatted'] .') '. $place .'</option>'."\n";
+  echo '>(UTC'. $val['std_offset_formatted'] .') '. $place .'</option>'."\n";
 }
 
 echo '</select>'."\n";
@@ -200,13 +214,13 @@ echo '</select>'."\n";
 /*
 <select>
   <option value="Pacific/Wake">(UTC+12:00) Wake Island, United States</option>
-  <option value="America/St_Johns">(UTC-03:00) St. John's, NL, Canada</option>
-  <option value="Atlantic/Stanley">(UTC-03:00) Stanley, NB, Canada</option>
+  <option value="America/St_Johns">(UTC-03:30) St. John's, NL, Canada</option>
   <option value="America/Blanc-Sablon">(UTC-04:00) Blanc-Sablon, QC, Canada</option>
   <option value="America/Glace_Bay">(UTC-04:00) Glace Bay, NC, Canada</option>
   <option value="America/Goose_Bay">(UTC-04:00) Goose Bay, NL, Canada</option>
   <option value="America/Halifax">(UTC-04:00) Halifax, NS, Canada</option>
   <option value="America/Moncton">(UTC-04:00) Moncton, NB, Canada</option>
+  <option value="Atlantic/Stanley">(UTC-03:00) Stanley, NB, Canada</option>
   <option value="America/Atikokan">(UTC-05:00) Atikokan, ON, Canada</option>
   <option value="America/Detroit">(UTC-05:00) Detroit, MI, United States</option>
   <option value="America/Indiana/Indianapolis">(UTC-05:00) Indianapolis, IN, United States</option>
@@ -248,11 +262,11 @@ echo '</select>'."\n";
   <option value="America/Yellowknife">(UTC-07:00) Yellowknife, NT, Canada</option>
   <option value="America/Dawson">(UTC-08:00) Dawson, YT, Canada</option>
   <option value="America/Los_Angeles" selected>(UTC-08:00) Los Angeles, CA, United States</option>
-  <option value="America/Metlakatla">(UTC-08:00) Metlakatla, AK, United States</option>
   <option value="America/Vancouver">(UTC-08:00) Vancouver, BC, Canada</option>
   <option value="America/Whitehorse">(UTC-08:00) Whitehorse, YT, Canada</option>
   <option value="America/Anchorage">(UTC-09:00) Anchorage, AK, United States</option>
   <option value="America/Juneau">(UTC-09:00) Juneau, AK, United States</option>
+  <option value="America/Metlakatla">(UTC-08:00) Metlakatla, AK, United States</option>
   <option value="America/Nome">(UTC-09:00) Nome, AK, United States</option>
   <option value="America/Sitka">(UTC-09:00) Sitka, AK, United States</option>
   <option value="America/Yakutat">(UTC-09:00) Yakutat, AK, United States</option>
@@ -262,6 +276,8 @@ echo '</select>'."\n";
   <option value="Pacific/Midway">(UTC-11:00) Midway Atoll, United States</option>
   <option value="Pacific/Pago_Pago">(UTC-11:00) Pago Pago, United States</option>
 </select>
+
+Exec time = 3.18 msec
 
 */
 
@@ -278,48 +294,50 @@ mysqli_set_charset($link, "utf8mb4");
 $zoneObj = new TimeZoneCity;
 $zoneObj->dbresource = $link;
 
-$info = $zoneObj->GetZoneInfo('Africa/Sao_Tome');
-
-# Google Maps API place_id can be used to obtain translated name
-echo $info['place_id'];   # ChIJidiaC_nscBAR6jB2VQwjUWI
-
-echo $info['place_name']; # São Tomé and Príncipe
-
-# Remove accents
-$city = $zoneObj->RemoveAccents($info['place_name']); # Sao Tome and Principe
+$info = $zoneObj->GetZoneInfo('Australia/Melbourne');
 
 var_dump($info);
 
 /*
-array(11) {
+array(15) {
   ["time_zone"]=>
-  string(15) "Africa/Sao_Tome"
-  ["offset"]=>
-  string(1) "0"
-  ["offset_formatted"]=>
-  string(6) "+00:00"
+  string(19) "Australia/Melbourne"
+  ["std_abbr"]=>
+  string(4) "AEST"
+  ["dst_abbr"]=>
+  string(4) "AEDT"
+  ["std_offset"]=>
+  string(2) "10"
+  ["dst_offset"]=>
+  string(2) "11"
+  ["std_full"]=>
+  string(32) "Australian Eastern Standard Time"
+  ["dst_full"]=>
+  string(40) "Australian Eastern Daylight Savings Time"
   ["place_name"]=>
-  string(24) "São Tomé and Príncipe"
+  string(9) "Melbourne"
   ["place_id"]=>
-  string(27) "ChIJidiaC_nscBAR6jB2VQwjUWI"
+  string(27) "ChIJ90260rVG1moRkM2MIXVWBAQ"
   ["region_code"]=>
-  string(0) ""
+  string(3) "VIC"
   ["region_name"]=>
-  string(0) ""
+  string(8) "Victoria"
   ["country_code"]=>
-  string(2) "ST"
+  string(2) "AU"
   ["country_name"]=>
-  string(24) "São Tomé and Príncipe"
+  string(9) "Australia"
   ["latitude"]=>
-  string(7) "0.18636"
+  string(11) "-37.8136276"
   ["longitude"]=>
-  string(17) "6.613080999999999"
+  string(11) "144.9630576"
 }
+
+Exec time = 463.96 μsec
 */
 
 ```
 
-Get 3-4 letter abbreviation of given time zone:
+Get abbreviation of given time zone:
 ```php
 use peterkahl\TimeZoneCity\TimeZoneCity;
 
@@ -330,6 +348,12 @@ mysqli_set_charset($link, "utf8mb4");
 $zoneObj = new TimeZoneCity;
 $zoneObj->dbresource = $link;
 
-echo $zoneObj->GetZoneAbbr('Europe/London'); # BST
+$DateObj = new DateTime('now');
+$DateObj->setTimeZone(new DateTimeZone('Asia/Dubai');
+
+# Is DST in effect in the zone Asia/Dubai ?
+$dst = $DateObj->format('I');
+
+echo $zoneObj->GetZoneAbbr('Asia/Dubai', $dst); # GST
 
 ```

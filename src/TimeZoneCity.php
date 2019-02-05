@@ -2,9 +2,9 @@
 /**
  * Time Zone City
  *
- * @version    4.0 (2018-09-26 05:07:00 GMT)
+ * @version    2019-02-05 02:46:00 UTC
  * @author     Peter Kahl <https://github.com/peterkahl>
- * @copyright  2017-2018 Peter Kahl
+ * @copyright  2017-2019 Peter Kahl
  * @license    Apache License, Version 2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -37,15 +37,25 @@ class TimeZoneCity {
   #===================================================================
 
   /**
+   * Constructor initialises the cache.
+   *
+   */
+  public function __construct() {
+
+    $this->cachedAbbr = array();
+
+  }
+
+  #===================================================================
+
+  /**
    * Returns an array of timezones according to specified criteria.
    *
    * @param string  $sortby ........ Admissible values:
    *          -- 'time_zone'
-   *          -- 'offset'
+   *          -- 'std_offset'
+   *          -- 'dst_offset'
    *          -- 'place_name'
-   *          -- 'place_id'
-   *          -- 'region_code'
-   *          -- 'region_name'
    *          -- 'country_code'
    *          -- 'country_name'
    *          -- 'latitude'
@@ -70,7 +80,7 @@ class TimeZoneCity {
    * @return mixed
    * @throws \Exception
    */
-  public function GetAllZones($sortby = 'offset,place_name', $sortdir = 'asc,asc', $onlycountry = '') {
+  public function GetAllZones($sortby = 'std_offset,place_name', $sortdir = 'asc,asc', $onlycountry = '') {
 
     $sortdir = strtoupper($sortdir);
     $validSortdir = array(
@@ -87,11 +97,9 @@ class TimeZoneCity {
     $sortby = strtolower($sortby);
     $validSortby = array(
       'time_zone',
-      'offset',
+      'std_offset',
+      'dst_offset',
       'place_name',
-      'place_id',
-      'region_code',
-      'region_name',
       'country_code',
       'country_name',
       'latitude',
@@ -145,7 +153,7 @@ class TimeZoneCity {
     $n = 0;
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
       $arr[$n] = $row;
-      $arr[$n]['offset_formatted'] = $this->ReadableOffset($arr[$n]['offset']);
+      $arr[$n]['offset_formatted'] = $this->Sec2Readable($this->GetZoneOffset($arr[$n]['time_zone']));
       $n++;
     }
     return $arr;
@@ -180,16 +188,20 @@ class TimeZoneCity {
    * @throws \Exception
    */
   public function GetZoneInfo($zone) {
+
     $sql = "SELECT * FROM `timezonecity` WHERE `time_zone`='". mysqli_real_escape_string($this->dbresource, $zone) ."' LIMIT 1;";
+
     $result = mysqli_query($this->dbresource, $sql);
+
     if ($result === false) {
       throw new Exception('Error executing SQL query');
     }
+
     if (mysqli_num_rows($result) > 0) {
       $arr = mysqli_fetch_array($result, MYSQLI_ASSOC);
-      $arr['offset_formatted'] = $this->ReadableOffset($arr['offset']);
       return $arr;
     }
+
     return array();
   }
 
@@ -203,17 +215,17 @@ class TimeZoneCity {
    * @throws \Exception
    */
   public function GetNearestZone($country, $lat, $long) {
-    if (!empty($country)) {
-      $sql = "SELECT `time_zone` FROM `timezonecity` WHERE `country_code`='". mysqli_real_escape_string($this->dbresource, strtoupper($country)) ."' AND ABS(`longitude` - '". mysqli_real_escape_string($this->dbresource, $long) ."')<'15' ORDER BY ABS(`longitude` - '". mysqli_real_escape_string($this->dbresource, $long) ."') LIMIT 1;";
-      $result = mysqli_query($this->dbresource, $sql);
-      if ($result === false) {
-        throw new Exception('Error executing SQL query');
-      }
-      if (mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-        return $row['time_zone'];
-      }
+
+    $sql = "SELECT `time_zone` FROM `timezonecity` WHERE `country_code`='". mysqli_real_escape_string($this->dbresource, strtoupper($country)) ."' AND ABS(`longitude` - '". mysqli_real_escape_string($this->dbresource, $long) ."')<'15' ORDER BY ABS(`longitude` - '". mysqli_real_escape_string($this->dbresource, $long) ."') LIMIT 1;";
+    $result = mysqli_query($this->dbresource, $sql);
+    if ($result === false) {
+      throw new Exception('Error executing SQL query');
     }
+    if (mysqli_num_rows($result) > 0) {
+      $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      return $row['time_zone'];
+    }
+
     # Something was wrong with the country code. Now, we use only coordinates.
     $sql = "SELECT `time_zone` FROM `timezonecity` ORDER BY ABS(`longitude` - '". mysqli_real_escape_string($this->dbresource, $long) ."'), ABS(`latitude` - '". mysqli_real_escape_string($this->dbresource, $lat) ."') LIMIT 1;";
     $result = mysqli_query($this->dbresource, $sql);
@@ -224,13 +236,57 @@ class TimeZoneCity {
       $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
       return $row['time_zone'];
     }
+
     throw new Exception('Failed to determime nearest timezone');
   }
 
   #===================================================================
 
   /**
-   * Calculates offset from GMT for given timezone.
+   * Returns time zone abbreviation based on DST status.
+   * @param  string      $zone .... ex. 'Atlantic/Azores'
+   * @param  string      $dst ..... '1' OR true if DST is in effect
+   * @return string ............... ex. 'AZOT'
+   * @throws \Exception
+   */
+  public function GetZoneAbbr($zone, $dst) {
+
+    if ($dst) {
+      $dst = '1';
+    }
+    else {
+      $dst = '0';
+    }
+
+    if (!empty($this->cachedAbbr) && array_key_exists($zone . $dst, $this->cachedAbbr)) {
+      return $this->cachedAbbr[$zone . $dst];
+    }
+
+    $sql = "SELECT `std_abbr`,`dst_abbr` FROM `timezonecity` WHERE `time_zone`='". mysqli_real_escape_string($this->dbresource, $zone) ."';";
+
+    $result = mysqli_query($this->dbresource, $sql);
+
+    if ($result === false) {
+      throw new Exception('Error executing SQL query');
+    }
+
+    if (mysqli_num_rows($result) > 0) {
+      $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      if ($dst) {
+        $this->cachedAbbr[$zone . $dst] = $row['dst_abbr'];
+        return $row['dst_abbr'];
+      }
+      $this->cachedAbbr[$zone . $dst] = $row['std_abbr'];
+      return $row['std_abbr'];
+    }
+
+    return 'ERROR';
+  }
+
+  #===================================================================
+
+  /**
+   * Calculates offset from UTC for given timezone (right now).
    * This includes DST (if observed).
    * @param  string   $zone
    * @return integer
@@ -244,73 +300,15 @@ class TimeZoneCity {
   #===================================================================
 
   /**
-   * Returns zone abbreviation, e.g. GMT, BST, PDT, HKT.
-   * @param  string   $zone
-   * @param  boolean  $preventEmpty ... When abbreviation does not exist,
-   *                                    offset will be returned instead,
-   *                                    e.g. +0100
-   * @return string
-   * @throws \Exception
-   */
-  public function GetZoneAbbr($zone, $preventEmpty = true) {
-    $tz = new DateTimeZone($zone);
-    $date = new DateTime('now', $tz);
-    $trans = $tz->getTransitions();
-    foreach ($trans as $k => $t) {
-      if ($t['ts'] > time()) {
-        return $trans[$k-1]['abbr'];
-      }
-    }
-    return $preventEmpty ? $this->Sec2Readable($this->GetZoneOffset($zone)) : '';
-  }
-
-  #===================================================================
-
-  /**
-   * Is daylight savings (+1 hour) observed right now?
-   * @param  string $zone
-   * @return boolean
-   * @throws \Exception
-   */
-  public function ZoneDoesDST($zone) {
-    $tz = new DateTimeZone($zone);
-    $date = new DateTime('now', $tz);
-    $trans = $tz->getTransitions();
-    foreach ($trans as $k => $t) {
-      if ($t['ts'] > $date->format('U')) {
-        return $trans[$k-1]['isdst'];
-      }
-    }
-    throw new Exception('Failed to locate key for zone '. $zone);
-  }
-
-  #===================================================================
-
-  /**
-   * Zone offset in seconds into readable format.
+   * Converts zone offset in seconds into 'H:m' format.
    * @param  integer $sec
    * @return string
    */
   public function Sec2Readable($sec) {
     $hours   = floor(abs($sec)/3600);
     $minutes = floor((abs($sec) - $hours*3600)/60);
-    $sign = ($sec >= 0) ? '+' : '';
-    return $sign . str_pad($hours, 2, '0', STR_PAD_LEFT) . str_pad($minutes, 2, '0', STR_PAD_LEFT);
-  }
-
-  #===================================================================
-
-  /**
-   * Converts offset in hours and decimal fractions into 'H:m' format.
-   * @param  string $offset
-   * @return string
-   */
-  public function ReadableOffset($offset) {
-    $offset = number_format($offset, 2, '.', '');
-    list($hours, $decimal) = explode('.', $offset);
-    $minutes = str_pad(substr(trim('.'. $decimal * 60, '.'), 0, 2), 2, '0', STR_PAD_RIGHT);
-    $sign = ($hours >= 0) ? '+' : '-';
-    return $sign . str_pad(abs($hours), 2, '0', STR_PAD_LEFT) .':'. $minutes;
+    $sign = ($sec >= 0) ? '+' : '-';
+    return $sign . str_pad($hours, 2, '0', STR_PAD_LEFT)  .':'.  str_pad($minutes, 2, '0', STR_PAD_LEFT);
   }
 
   #===================================================================
