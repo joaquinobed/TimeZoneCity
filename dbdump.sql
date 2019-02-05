@@ -1,6 +1,6 @@
 --
 -- Time Zone City
--- Version Date: 2019-02-05 02:46:00 UTC
+-- Version Date: 2019-02-05 04:47:00 UTC
 --
 -- Copyright 2017-2019 Peter Kahl
 --
@@ -359,7 +359,7 @@ INSERT INTO `timezonecity` (`time_zone`, `std_abbr`, `dst_abbr`, `std_offset`, `
 ('Australia/Darwin', 'ACST', '', 9.5, 9.5, 'Australia Central Standard Time', '', 'Darwin', 'ChIJPwRZn_ygwCwRIHwkKqgXAgM', 'NT', 'Northern Territory', 'AU', 'Australia', -12.4634403, 130.8456418),
 ('Australia/Eucla', 'ACWST', '', 8.75, 8.75, 'Australian Central Western Standard Time', '', 'Eucla', 'ChIJEYdkjdUa8CoRcNh5JDj2AAQ', 'WA', 'Western Australia', 'AU', 'Australia', -31.6772316, 128.8897862),
 ('Australia/Hobart', 'AEST', 'AEDT', 10, 11, 'Australian Eastern Standard Time', 'Australian Eastern Daylight Savings Time', 'Hobart', 'ChIJ7c8s5YR1bqoRMBXe0E3JAwU', 'TAS', 'Tasmania', 'AU', 'Australia', -42.8821377, 147.3271949),
-('Australia/Lindeman', 'AEST', '', 10, 10, 'Australian Eastern Standard Time', '', 'Lindeman Island', 'ChIJrQcNdG6p2WsRt27zvZUT9b4', 'QLD', 'Queensland', 'Au', 'Australia', -20.4447841, 149.0410504),
+('Australia/Lindeman', 'AEST', '', 10, 10, 'Australian Eastern Standard Time', '', 'Lindeman Island', 'ChIJrQcNdG6p2WsRt27zvZUT9b4', 'QLD', 'Queensland', 'AU', 'Australia', -20.4447841, 149.0410504),
 ('Australia/Lord_Howe', 'LHST', 'LHDT', 10.5, 11, 'Lord Howe Standard Time', 'Lord Howe Daylight Savings Time', 'Lord Howe Island', 'ChIJXwS-RUAafGwRVU9LRksVlJM', 'NSW', 'New South Wales', 'AU', 'Australia', -31.5553263, 159.0821211),
 ('Australia/Melbourne', 'AEST', 'AEDT', 10, 11, 'Australian Eastern Standard Time', 'Australian Eastern Daylight Savings Time', 'Melbourne', 'ChIJ90260rVG1moRkM2MIXVWBAQ', 'VIC', 'Victoria', 'AU', 'Australia', -37.8136276, 144.9630576),
 ('Australia/Perth', 'AWST', '', 8, 8, 'Australian Western Standard Time', '', 'Perth', 'ChIJPXNH22yWMioR0FXfNbXwBAM', 'WA', 'Western Australia', 'AU', 'Australia', -31.9505269, 115.8604572),
@@ -482,7 +482,6 @@ ALTER TABLE `timezonecity`
   ADD UNIQUE KEY `time_zone_2` (`time_zone`),
   ADD KEY `time_zone` (`time_zone`);
 COMMIT;
-
 
 
 
