@@ -1,7 +1,7 @@
 # Time Zone City
 
 [![Downloads](https://img.shields.io/packagist/dt/peterkahl/time-zone-city.svg)](https://packagist.org/packages/peterkahl/time-zone-city)
-[![License](https://img.shields.io/github/license/peterkahl/time-zone-city.svg?logo=License)](https://github.com/peterkahl/time-zone-city/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/peterkahl/time-zone-city.svg?logo=License)](https://github.com/peterkahl/TimeZoneCity/blob/master/LICENSE)
 [![If this project has business value for you then don't hesitate to support me with a small donation.](https://img.shields.io/badge/Donations-via%20Paypal-blue.svg)](https://www.paypal.me/PeterK93)
 
 This PHP timezone library --
