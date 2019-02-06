@@ -57,7 +57,7 @@ $country   = 'ru';
 $latitude  = 55.61;
 $longitude = 38.76;
 
-echo $zoneObj->GetNearestZone($country, $latitude, $longitude);
+print_r($zoneObj->GetNearestZone($country, $latitude, $longitude), true);
 
 /*
 Array
