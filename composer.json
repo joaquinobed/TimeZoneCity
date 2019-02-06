@@ -2,7 +2,7 @@
     "name": "peterkahl/time-zone-city",
     "type": "library",
     "description": "Detects nearest timezone (and country etc.) for given coordinates Generates HTML code for timezone select with customizable configuration.",
-    "keywords": ["time-zones", "timezone-select", "google-maps-api", "time-zone-table", "html-generation", "datetime", "date", "time"],
+    "keywords": ["time-zones", "timezone-select", "google-maps-api", "time-zone-table", "html-generation", "datetime", "date", "time", "geocoding"],
     "homepage": "https://github.com/peterkahl/TimeZoneCity",
     "license": "Apache-2.0",
     "authors": [

@@ -57,17 +57,62 @@ $country   = 'ru';
 $latitude  = 55.61;
 $longitude = 38.76;
 
-echo $zoneObj->GetNearestZone($country, $latitude, $longitude); # Europe/Moscow
+echo $zoneObj->GetNearestZone($country, $latitude, $longitude);
+
+/*
+Array
+(
+    [time_zone] => Europe/Moscow
+    [std_abbr] => MSK
+    [dst_abbr] =>
+    [std_offset] => 3
+    [dst_offset] => 3
+    [std_full] => Moscow Time
+    [dst_full] =>
+    [place_name] => Moscow
+    [place_id] => ChIJybDUc_xKtUYRTM9XV8zWRD0
+    [region_code] =>
+    [region_name] => Moskva Oblast
+    [country_code] => RU
+    [country_name] => Russia
+    [latitude] => 55.755826
+    [longitude] => 37.6173
+)
+*/
 
 #-----------------------------------------------------------------------
-# If we don't know the country code, or the code is erorrneous,
-# latitude and longitude will be used to determine the nearest timezone.
+# GEOCODING
+# If we don't know the country code (or the code is erorrneous),
+# latitude and longitude will be used to determine the nearest timezone, country etc.
 
 $country   = '';
-$latitude  = 22.27;
-$longitude = 113.79;
+$latitude  = 52.486;  # This is Birmingham, UK
+$longitude = -1.89;
 
-echo $zoneObj->GetNearestZone($country, $latitude, $longitude); # Asia/Macau
+print_r($zoneObj->GetNearestZone($country, $latitude, $longitude), true);
+
+/*
+Array
+(
+    [time_zone] => Europe/Jersey
+    [std_abbr] => GMT
+    [dst_abbr] => BST
+    [std_offset] => 0
+    [dst_offset] => 1
+    [std_full] => Greenwich Mean Time
+    [dst_full] => British Summer Time
+    [place_name] => Jersey
+    [place_id] => ChIJM3WSjKRSDEgRw2waCqMjnFE
+    [region_code] =>
+    [region_name] =>
+    [country_code] => JE
+    [country_name] => Jersey
+    [latitude] => 49.214439
+    [longitude] => -2.13125
+)
+
+Well, it's not perfect, but close enough! At least the timezone is right.
+*/
 
 #-----------------------------------------------------------------------
 # Example when country code is erorrneous.
@@ -76,7 +121,28 @@ $country   = 'DE';
 $latitude  = 22.27; # Coordinates are near Macau; can't be Germany!
 $longitude = 113.79;
 
-echo $zoneObj->GetNearestZone($country, $latitude, $longitude); # Asia/Macau
+print_r($zoneObj->GetNearestZone($country, $latitude, $longitude), true);
+
+/*
+Array
+(
+    [time_zone] => Asia/Macau
+    [std_abbr] => CST
+    [dst_abbr] =>
+    [std_offset] => 8
+    [dst_offset] => 8
+    [std_full] => China Standard Time
+    [dst_full] =>
+    [place_name] => Macau
+    [place_id] => ChIJ88g14uB6ATQR9qyFtCzje8Y
+    [region_code] =>
+    [region_name] =>
+    [country_code] => MO
+    [country_name] => Macau
+    [latitude] => 22.198745
+    [longitude] => 113.543873
+)
+*/
 
 ```
 

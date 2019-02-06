@@ -2,7 +2,7 @@
 /**
  * Time Zone City
  *
- * @version    2019-02-05 02:46:00 UTC
+ * @version    2019-02-06 07:58:00 UTC
  * @author     Peter Kahl <https://github.com/peterkahl>
  * @copyright  2017-2019 Peter Kahl
  * @license    Apache License, Version 2.0
@@ -208,36 +208,46 @@ class TimeZoneCity {
   #===================================================================
 
   /**
-   * Returns nearest timezone for given country, longitude, latitude.
-   * @param  string  $country ... 2-letter country code
+   * Returns nearest timezone data (incl. timezone db name) for
+   * given country, longitude & latitude.
+   * @param  mixed   $country ..... 2-letter country code, e.g. 'FR', or boolean false
    * @param  float   $lat  $long
-   * @return string
+   * @return array   .............. array (the whole row)
    * @throws \Exception
    */
   public function GetNearestZone($country, $lat, $long) {
 
-    $sql = "SELECT `time_zone` FROM `timezonecity` WHERE `country_code`='". mysqli_real_escape_string($this->dbresource, strtoupper($country)) ."' AND ABS(`longitude` - '". mysqli_real_escape_string($this->dbresource, $long) ."')<'15' ORDER BY ABS(`longitude` - '". mysqli_real_escape_string($this->dbresource, $long) ."') LIMIT 1;";
-    $result = mysqli_query($this->dbresource, $sql);
-    if ($result === false) {
-      throw new Exception('Error executing SQL query');
+    if (empty($lat) || empty($long)) {
+      throw new Exception('Arguments lat, long cannot be empty');
     }
-    if (mysqli_num_rows($result) > 0) {
-      $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-      return $row['time_zone'];
+
+    if (!empty($country) && strlen($country) == 2) {
+
+      $sql = "SELECT * FROM `timezonecity` WHERE `country_code`='". mysqli_real_escape_string($this->dbresource, strtoupper($country)) ."' AND ABS(`longitude` - '". mysqli_real_escape_string($this->dbresource, $long) ."')<'15' ORDER BY ABS(`longitude` - '". mysqli_real_escape_string($this->dbresource, $long) ."') LIMIT 1;";
+      $result = mysqli_query($this->dbresource, $sql);
+
+      if ($result === false) {
+        throw new Exception('Error executing SQL query');
+      }
+
+      if (mysqli_num_rows($result) > 0) {
+        return mysqli_fetch_array($result, MYSQLI_ASSOC);
+      }
     }
 
     # Something was wrong with the country code. Now, we use only coordinates.
-    $sql = "SELECT `time_zone` FROM `timezonecity` ORDER BY ABS(`longitude` - '". mysqli_real_escape_string($this->dbresource, $long) ."'), ABS(`latitude` - '". mysqli_real_escape_string($this->dbresource, $lat) ."') LIMIT 1;";
+    $sql = "SELECT * FROM `timezonecity` ORDER BY ABS(`longitude` - '". mysqli_real_escape_string($this->dbresource, $long) ."'), ABS(`latitude` - '". mysqli_real_escape_string($this->dbresource, $lat) ."') LIMIT 1;";
     $result = mysqli_query($this->dbresource, $sql);
+
     if ($result === false) {
       throw new Exception('Error executing SQL query');
     }
+
     if (mysqli_num_rows($result) > 0) {
-      $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-      return $row['time_zone'];
+      return mysqli_fetch_array($result, MYSQLI_ASSOC);
     }
 
-    throw new Exception('Failed to determime nearest timezone');
+    throw new Exception('Failed to locate nearest timezone data');
   }
 
   #===================================================================
