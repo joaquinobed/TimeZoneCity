@@ -1,6 +1,6 @@
 --
 -- Time Zone City
--- Version Date: 2019-02-05 04:47:00 UTC
+-- Version Date: 2019-02-13 05:55:00 UTC
 --
 -- Copyright 2017-2019 Peter Kahl
 --
@@ -17,6 +17,13 @@
 -- limitations under the License.
 --
 
+
+-- phpMyAdmin SQL Dump
+-- version 4.8.5
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost
+-- Generation Time: Feb 13, 2019 at 05:54 AM
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -333,7 +340,7 @@ INSERT INTO `timezonecity` (`time_zone`, `std_abbr`, `dst_abbr`, `std_offset`, `
 ('Asia/Thimphu', 'BTT', '', 6, 6, 'Bhutan Time', '', 'Thimphu', 'ChIJtzcglhmU4TkR0WAFZuL_AXw', '', '', 'BT', 'Bhutan', 27.4727924, 89.6392863),
 ('Asia/Tokyo', 'JST', '', 9, 9, 'Japan Standard Time', '', 'Tokyo', 'ChIJ51cu8IcbXWARiRtXIothAS4', '', '', 'JP', 'Japan', 35.6894875, 139.6917064),
 ('Asia/Ulaanbaatar', 'ULAT', '', 8, 8, 'Ulaanbaatar Time', '', 'Ulaanbaatar', 'ChIJq4qx4luSll0Rf4ShZHiSBuY', '', '', 'MN', 'Mongolia', 47.8863988, 106.9057439),
-('Asia/Urumqi', 'CST', '', 8, 8, 'China Standard Time', '', 'Urumqi', 'ChIJq017_YwABjgRinB6rOtSWao', '', 'Xinjiang', 'CN', 'China', 43.825592, 87.616848),
+('Asia/Urumqi', 'XJT', '', 6, 6, 'Xinjiang Time', '', 'Ürümqi', 'ChIJq017_YwABjgRinB6rOtSWao', '', 'Xinjiang', 'CN', 'China', 43.825592, 87.616848),
 ('Asia/Ust-Nera', 'VLAT', '', 10, 10, 'Vladivostok Time', '', 'Ust-Nera', 'ChIJgTeBCWHO3VsRlSVHjNx_pgQ', '', 'Sakha Republic', 'RU', 'Russia', 64.5596103, 143.2244253),
 ('Asia/Vientiane', 'ICT', '', 7, 7, 'Indochina Time', '', 'Vientiane', 'ChIJIXvtBoZoJDER3-7BGIaxkx8', '', '', 'LA', 'Laos', 17.9757058, 102.6331035),
 ('Asia/Vladivostok', 'VLAT', '', 10, 10, 'Vladivostok Time', '', 'Vladivostok', 'ChIJhdRJUrqcs18RNX6W3dQEZxg', '', 'Primorsky Krai', 'RU', 'Russia', 43.1198091, 131.8869243),
