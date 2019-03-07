@@ -34,12 +34,6 @@ Each zone includes these details:
 
 The version released on 2019-02-05 is a major revamp with code improvements and database expansion. Make sure you import the database dump if your existing Time Zone City is older than 2019-02-05.
 
-### Alternative time zone library available!
-
-I have created an alternative library which is simpler, less versatile and does not use SQL database, but may do the job you need:
-
-[https://github.com/peterkahl/time-zone-name](https://github.com/peterkahl/time-zone-name)
-
 ## Usage
 
 Get name of timezone from country code, latitude and longitude:
@@ -211,39 +205,39 @@ echo '</select>'."\n";
 
 /*
 <select>
-  <option value="Pacific/Wake">(UTC+12:00) Wake Island</option>
-  <option value="America/Detroit">(UTC-05:00) Detroit, MI</option>
-  <option value="America/Indiana/Indianapolis">(UTC-05:00) Indianapolis, IN</option>
-  <option value="America/Kentucky/Louisville">(UTC-05:00) Louisville, KY</option>
-  <option value="America/Indiana/Marengo">(UTC-05:00) Marengo, IN</option>
-  <option value="America/Kentucky/Monticello">(UTC-05:00) Monticello, KY</option>
-  <option value="America/New_York">(UTC-05:00) New York, NY</option>
-  <option value="America/Indiana/Petersburg">(UTC-05:00) Petersburg, IN</option>
-  <option value="America/Indiana/Vevay">(UTC-05:00) Vevay, IN</option>
-  <option value="America/Indiana/Vincennes">(UTC-05:00) Vincennes, IN</option>
-  <option value="America/Indiana/Winamac">(UTC-05:00) Winamac, IN</option>
-  <option value="America/North_Dakota/Beulah">(UTC-06:00) Beulah, ND</option>
-  <option value="America/North_Dakota/Center">(UTC-06:00) Center, ND</option>
-  <option value="America/Chicago">(UTC-06:00) Chicago, IL</option>
-  <option value="America/Indiana/Knox">(UTC-06:00) Knox, IN</option>
-  <option value="America/Menominee">(UTC-06:00) Menominee, MI</option>
-  <option value="America/North_Dakota/New_Salem">(UTC-06:00) New Salem, ND</option>
-  <option value="America/Indiana/Tell_City">(UTC-06:00) Tell City, IN</option>
-  <option value="America/Boise">(UTC-07:00) Boise, ID</option>
-  <option value="America/Denver">(UTC-07:00) Denver, CO</option>
-  <option value="America/Phoenix">(UTC-07:00) Phoenix, AZ</option>
-  <option value="America/Los_Angeles" selected>(UTC-08:00) Los Angeles, CA</option>
-  <option value="America/Metlakatla">(UTC-08:00) Metlakatla, AK</option>
-  <option value="America/Anchorage">(UTC-09:00) Anchorage, AK</option>
-  <option value="America/Juneau">(UTC-09:00) Juneau, AK</option>
-  <option value="America/Nome">(UTC-09:00) Nome, AK</option>
-  <option value="America/Sitka">(UTC-09:00) Sitka, AK</option>
-  <option value="America/Yakutat">(UTC-09:00) Yakutat, AK</option>
-  <option value="America/Adak">(UTC-10:00) Adak, AK</option>
-  <option value="Pacific/Honolulu">(UTC-10:00) Honolulu, HI</option>
-  <option value="Pacific/Johnston">(UTC-10:00) Johnston Atoll</option>
-  <option value="Pacific/Midway">(UTC-11:00) Midway Atoll</option>
-  <option value="Pacific/Pago_Pago">(UTC-11:00) Pago Pago</option>
+  <option value="Pacific/Wake">(UTC+1200) Wake Island</option>
+  <option value="America/Detroit">(UTC-0500) Detroit, MI</option>
+  <option value="America/Indiana/Indianapolis">(UTC-0500) Indianapolis, IN</option>
+  <option value="America/Kentucky/Louisville">(UTC-0500) Louisville, KY</option>
+  <option value="America/Indiana/Marengo">(UTC-0500) Marengo, IN</option>
+  <option value="America/Kentucky/Monticello">(UTC-0500) Monticello, KY</option>
+  <option value="America/New_York">(UTC-0500) New York, NY</option>
+  <option value="America/Indiana/Petersburg">(UTC-0500) Petersburg, IN</option>
+  <option value="America/Indiana/Vevay">(UTC-0500) Vevay, IN</option>
+  <option value="America/Indiana/Vincennes">(UTC-0500) Vincennes, IN</option>
+  <option value="America/Indiana/Winamac">(UTC-0500) Winamac, IN</option>
+  <option value="America/North_Dakota/Beulah">(UTC-0600) Beulah, ND</option>
+  <option value="America/North_Dakota/Center">(UTC-0600) Center, ND</option>
+  <option value="America/Chicago">(UTC-0600) Chicago, IL</option>
+  <option value="America/Indiana/Knox">(UTC-0600) Knox, IN</option>
+  <option value="America/Menominee">(UTC-0600) Menominee, MI</option>
+  <option value="America/North_Dakota/New_Salem">(UTC-0600) New Salem, ND</option>
+  <option value="America/Indiana/Tell_City">(UTC-0600) Tell City, IN</option>
+  <option value="America/Boise">(UTC-0700) Boise, ID</option>
+  <option value="America/Denver">(UTC-0700) Denver, CO</option>
+  <option value="America/Phoenix">(UTC-0700) Phoenix, AZ</option>
+  <option value="America/Los_Angeles" selected>(UTC-0800) Los Angeles, CA</option>
+  <option value="America/Metlakatla">(UTC-0800) Metlakatla, AK</option>
+  <option value="America/Anchorage">(UTC-0900) Anchorage, AK</option>
+  <option value="America/Juneau">(UTC-0900) Juneau, AK</option>
+  <option value="America/Nome">(UTC-0900) Nome, AK</option>
+  <option value="America/Sitka">(UTC-0900) Sitka, AK</option>
+  <option value="America/Yakutat">(UTC-0900) Yakutat, AK</option>
+  <option value="America/Adak">(UTC-1000) Adak, AK</option>
+  <option value="Pacific/Honolulu">(UTC-1000) Honolulu, HI</option>
+  <option value="Pacific/Johnston">(UTC-1000) Johnston Atoll</option>
+  <option value="Pacific/Midway">(UTC-1100) Midway Atoll</option>
+  <option value="Pacific/Pago_Pago">(UTC-1100) Pago Pago</option>
 </select>
 
 */
@@ -276,68 +270,68 @@ echo '</select>'."\n";
 
 /*
 <select>
-  <option value="Pacific/Wake">(UTC+12:00) Wake Island, United States</option>
-  <option value="America/St_Johns">(UTC-03:30) St. John's, NL, Canada</option>
-  <option value="America/Blanc-Sablon">(UTC-04:00) Blanc-Sablon, QC, Canada</option>
-  <option value="America/Glace_Bay">(UTC-04:00) Glace Bay, NC, Canada</option>
-  <option value="America/Goose_Bay">(UTC-04:00) Goose Bay, NL, Canada</option>
-  <option value="America/Halifax">(UTC-04:00) Halifax, NS, Canada</option>
-  <option value="America/Moncton">(UTC-04:00) Moncton, NB, Canada</option>
-  <option value="Atlantic/Stanley">(UTC-03:00) Stanley, NB, Canada</option>
-  <option value="America/Atikokan">(UTC-05:00) Atikokan, ON, Canada</option>
-  <option value="America/Detroit">(UTC-05:00) Detroit, MI, United States</option>
-  <option value="America/Indiana/Indianapolis">(UTC-05:00) Indianapolis, IN, United States</option>
-  <option value="America/Iqaluit">(UTC-05:00) Iqaluit, NU, Canada</option>
-  <option value="America/Kentucky/Louisville">(UTC-05:00) Louisville, KY, United States</option>
-  <option value="America/Indiana/Marengo">(UTC-05:00) Marengo, IN, United States</option>
-  <option value="America/Kentucky/Monticello">(UTC-05:00) Monticello, KY, United States</option>
-  <option value="America/New_York">(UTC-05:00) New York, NY, United States</option>
-  <option value="America/Nipigon">(UTC-05:00) Nipigon, ON, Canada</option>
-  <option value="America/Pangnirtung">(UTC-05:00) Pangnirtung, NU, Canada</option>
-  <option value="America/Indiana/Petersburg">(UTC-05:00) Petersburg, IN, United States</option>
-  <option value="America/Thunder_Bay">(UTC-05:00) Thunder Bay, ON, Canada</option>
-  <option value="America/Toronto">(UTC-05:00) Toronto, ON, Canada</option>
-  <option value="America/Indiana/Vevay">(UTC-05:00) Vevay, IN, United States</option>
-  <option value="America/Indiana/Vincennes">(UTC-05:00) Vincennes, IN, United States</option>
-  <option value="America/Indiana/Winamac">(UTC-05:00) Winamac, IN, United States</option>
-  <option value="America/North_Dakota/Beulah">(UTC-06:00) Beulah, ND, United States</option>
-  <option value="America/North_Dakota/Center">(UTC-06:00) Center, ND, United States</option>
-  <option value="America/Chicago">(UTC-06:00) Chicago, IL, United States</option>
-  <option value="America/Indiana/Knox">(UTC-06:00) Knox, IN, United States</option>
-  <option value="America/Menominee">(UTC-06:00) Menominee, MI, United States</option>
-  <option value="America/North_Dakota/New_Salem">(UTC-06:00) New Salem, ND, United States</option>
-  <option value="America/Rainy_River">(UTC-06:00) Rainy River, ON, Canada</option>
-  <option value="America/Rankin_Inlet">(UTC-06:00) Rankin Inlet, NU, Canada</option>
-  <option value="America/Regina">(UTC-06:00) Regina, SK, Canada</option>
-  <option value="America/Resolute">(UTC-06:00) Resolute, NU, Canada</option>
-  <option value="America/Swift_Current">(UTC-06:00) Swift Current, SK, Canada</option>
-  <option value="America/Indiana/Tell_City">(UTC-06:00) Tell City, IN, United States</option>
-  <option value="America/Winnipeg">(UTC-06:00) Winnipeg, MB, Canada</option>
-  <option value="America/Boise">(UTC-07:00) Boise, ID, United States</option>
-  <option value="America/Cambridge_Bay">(UTC-07:00) Cambridge Bay, NU, Canada</option>
-  <option value="America/Creston">(UTC-07:00) Creston, BC, Canada</option>
-  <option value="America/Dawson_Creek">(UTC-07:00) Dawson Creek, BC, Canada</option>
-  <option value="America/Denver">(UTC-07:00) Denver, CO, United States</option>
-  <option value="America/Edmonton">(UTC-07:00) Edmonton, AB, Canada</option>
-  <option value="America/Fort_Nelson">(UTC-07:00) Fort Nelson, BC, Canada</option>
-  <option value="America/Inuvik">(UTC-07:00) Inuvik, NT, Canada</option>
-  <option value="America/Phoenix">(UTC-07:00) Phoenix, AZ, United States</option>
-  <option value="America/Yellowknife">(UTC-07:00) Yellowknife, NT, Canada</option>
-  <option value="America/Dawson">(UTC-08:00) Dawson, YT, Canada</option>
-  <option value="America/Los_Angeles" selected>(UTC-08:00) Los Angeles, CA, United States</option>
-  <option value="America/Vancouver">(UTC-08:00) Vancouver, BC, Canada</option>
-  <option value="America/Whitehorse">(UTC-08:00) Whitehorse, YT, Canada</option>
-  <option value="America/Anchorage">(UTC-09:00) Anchorage, AK, United States</option>
-  <option value="America/Juneau">(UTC-09:00) Juneau, AK, United States</option>
-  <option value="America/Metlakatla">(UTC-08:00) Metlakatla, AK, United States</option>
-  <option value="America/Nome">(UTC-09:00) Nome, AK, United States</option>
-  <option value="America/Sitka">(UTC-09:00) Sitka, AK, United States</option>
-  <option value="America/Yakutat">(UTC-09:00) Yakutat, AK, United States</option>
-  <option value="America/Adak">(UTC-10:00) Adak, AK, United States</option>
-  <option value="Pacific/Honolulu">(UTC-10:00) Honolulu, HI, United States</option>
-  <option value="Pacific/Johnston">(UTC-10:00) Johnston Atoll, United States</option>
-  <option value="Pacific/Midway">(UTC-11:00) Midway Atoll, United States</option>
-  <option value="Pacific/Pago_Pago">(UTC-11:00) Pago Pago, United States</option>
+  <option value="Pacific/Wake">(UTC+1200) Wake Island, United States</option>
+  <option value="America/St_Johns">(UTC-0330) St. John's, NL, Canada</option>
+  <option value="America/Blanc-Sablon">(UTC-0400) Blanc-Sablon, QC, Canada</option>
+  <option value="America/Glace_Bay">(UTC-0400) Glace Bay, NC, Canada</option>
+  <option value="America/Goose_Bay">(UTC-0400) Goose Bay, NL, Canada</option>
+  <option value="America/Halifax">(UTC-0400) Halifax, NS, Canada</option>
+  <option value="America/Moncton">(UTC-0400) Moncton, NB, Canada</option>
+  <option value="Atlantic/Stanley">(UTC-0300) Stanley, NB, Canada</option>
+  <option value="America/Atikokan">(UTC-0500) Atikokan, ON, Canada</option>
+  <option value="America/Detroit">(UTC-0500) Detroit, MI, United States</option>
+  <option value="America/Indiana/Indianapolis">(UTC-0500) Indianapolis, IN, United States</option>
+  <option value="America/Iqaluit">(UTC-0500) Iqaluit, NU, Canada</option>
+  <option value="America/Kentucky/Louisville">(UTC-0500) Louisville, KY, United States</option>
+  <option value="America/Indiana/Marengo">(UTC-0500) Marengo, IN, United States</option>
+  <option value="America/Kentucky/Monticello">(UTC-0500) Monticello, KY, United States</option>
+  <option value="America/New_York">(UTC-0500) New York, NY, United States</option>
+  <option value="America/Nipigon">(UTC-0500) Nipigon, ON, Canada</option>
+  <option value="America/Pangnirtung">(UTC-0500) Pangnirtung, NU, Canada</option>
+  <option value="America/Indiana/Petersburg">(UTC-0500) Petersburg, IN, United States</option>
+  <option value="America/Thunder_Bay">(UTC-0500) Thunder Bay, ON, Canada</option>
+  <option value="America/Toronto">(UTC-0500) Toronto, ON, Canada</option>
+  <option value="America/Indiana/Vevay">(UTC-0500) Vevay, IN, United States</option>
+  <option value="America/Indiana/Vincennes">(UTC-0500) Vincennes, IN, United States</option>
+  <option value="America/Indiana/Winamac">(UTC-0500) Winamac, IN, United States</option>
+  <option value="America/North_Dakota/Beulah">(UTC-0600) Beulah, ND, United States</option>
+  <option value="America/North_Dakota/Center">(UTC-0600) Center, ND, United States</option>
+  <option value="America/Chicago">(UTC-0600) Chicago, IL, United States</option>
+  <option value="America/Indiana/Knox">(UTC-0600) Knox, IN, United States</option>
+  <option value="America/Menominee">(UTC-0600) Menominee, MI, United States</option>
+  <option value="America/North_Dakota/New_Salem">(UTC-0600) New Salem, ND, United States</option>
+  <option value="America/Rainy_River">(UTC-0600) Rainy River, ON, Canada</option>
+  <option value="America/Rankin_Inlet">(UTC-0600) Rankin Inlet, NU, Canada</option>
+  <option value="America/Regina">(UTC-0600) Regina, SK, Canada</option>
+  <option value="America/Resolute">(UTC-0600) Resolute, NU, Canada</option>
+  <option value="America/Swift_Current">(UTC-0600) Swift Current, SK, Canada</option>
+  <option value="America/Indiana/Tell_City">(UTC-0600) Tell City, IN, United States</option>
+  <option value="America/Winnipeg">(UTC-0600) Winnipeg, MB, Canada</option>
+  <option value="America/Boise">(UTC-0700) Boise, ID, United States</option>
+  <option value="America/Cambridge_Bay">(UTC-0700) Cambridge Bay, NU, Canada</option>
+  <option value="America/Creston">(UTC-0700) Creston, BC, Canada</option>
+  <option value="America/Dawson_Creek">(UTC-0700) Dawson Creek, BC, Canada</option>
+  <option value="America/Denver">(UTC-0700) Denver, CO, United States</option>
+  <option value="America/Edmonton">(UTC-0700) Edmonton, AB, Canada</option>
+  <option value="America/Fort_Nelson">(UTC-0700) Fort Nelson, BC, Canada</option>
+  <option value="America/Inuvik">(UTC-0700) Inuvik, NT, Canada</option>
+  <option value="America/Phoenix">(UTC-0700) Phoenix, AZ, United States</option>
+  <option value="America/Yellowknife">(UTC-0700) Yellowknife, NT, Canada</option>
+  <option value="America/Dawson">(UTC-0800) Dawson, YT, Canada</option>
+  <option value="America/Los_Angeles" selected>(UTC-0800) Los Angeles, CA, United States</option>
+  <option value="America/Vancouver">(UTC-0800) Vancouver, BC, Canada</option>
+  <option value="America/Whitehorse">(UTC-0800) Whitehorse, YT, Canada</option>
+  <option value="America/Anchorage">(UTC-0900) Anchorage, AK, United States</option>
+  <option value="America/Juneau">(UTC-0900) Juneau, AK, United States</option>
+  <option value="America/Metlakatla">(UTC-0800) Metlakatla, AK, United States</option>
+  <option value="America/Nome">(UTC-0900) Nome, AK, United States</option>
+  <option value="America/Sitka">(UTC-0900) Sitka, AK, United States</option>
+  <option value="America/Yakutat">(UTC-0900) Yakutat, AK, United States</option>
+  <option value="America/Adak">(UTC-1000) Adak, AK, United States</option>
+  <option value="Pacific/Honolulu">(UTC-1000) Honolulu, HI, United States</option>
+  <option value="Pacific/Johnston">(UTC-1000) Johnston Atoll, United States</option>
+  <option value="Pacific/Midway">(UTC-1100) Midway Atoll, United States</option>
+  <option value="Pacific/Pago_Pago">(UTC-1100) Pago Pago, United States</option>
 </select>
 
 Exec time = 3.18 msec
@@ -411,12 +405,14 @@ mysqli_set_charset($link, "utf8mb4");
 $zoneObj = new TimeZoneCity;
 $zoneObj->dbresource = $link;
 
-$DateObj = new DateTime('now');
-$DateObj->setTimeZone(new DateTimeZone('Asia/Dubai');
-
-# Is DST in effect in the zone Asia/Dubai ?
-$dst = $DateObj->format('I');
-
-echo $zoneObj->GetZoneAbbr('Asia/Dubai', $dst); # GST
+echo $zoneObj->GetZoneAbbr('Asia/Dubai'); # GST
 
 ```
+
+---
+
+### Alternative time zone library available!
+
+I have created an alternative library which is simpler, less versatile and does not use SQL database, but may do the job you need:
+
+[https://github.com/peterkahl/time-zone-name](https://github.com/peterkahl/time-zone-name)

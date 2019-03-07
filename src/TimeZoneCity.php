@@ -2,7 +2,7 @@
 /**
  * Time Zone City
  *
- * @version    2019-02-06 07:58:00 UTC
+ * @version    2019-03-07 05:11:00 UTC
  * @author     Peter Kahl <https://github.com/peterkahl>
  * @copyright  2017-2019 Peter Kahl
  * @license    Apache License, Version 2.0
@@ -33,6 +33,13 @@ class TimeZoneCity {
    *
    */
   public $dbresource;
+
+  /**
+   * Array with cached abbreviations
+   * Caching to speed up subsequent lookups.
+   * @var array
+   */
+  private $cachedAbbr;
 
   #===================================================================
 
@@ -153,7 +160,7 @@ class TimeZoneCity {
     $n = 0;
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
       $arr[$n] = $row;
-      $arr[$n]['offset_formatted'] = $this->Sec2Readable($this->GetZoneOffset($arr[$n]['time_zone']));
+      $arr[$n]['offset_formatted'] = $this->GetZoneOffset($arr[$n]['time_zone'], 'O');
       $n++;
     }
     return $arr;
@@ -255,18 +262,12 @@ class TimeZoneCity {
   /**
    * Returns time zone abbreviation based on DST status.
    * @param  string      $zone .... ex. 'Atlantic/Azores'
-   * @param  string      $dst ..... '1' OR true if DST is in effect
    * @return string ............... ex. 'AZOT'
    * @throws \Exception
    */
-  public function GetZoneAbbr($zone, $dst) {
+  public function GetZoneAbbr($zone) {
 
-    if ($dst) {
-      $dst = '1';
-    }
-    else {
-      $dst = '0';
-    }
+    $dst = $this->GetDST($zone);
 
     if (!empty($this->cachedAbbr) && array_key_exists($zone . $dst, $this->cachedAbbr)) {
       return $this->cachedAbbr[$zone . $dst];
@@ -296,29 +297,44 @@ class TimeZoneCity {
   #===================================================================
 
   /**
-   * Calculates offset from UTC for given timezone (right now).
+   * Returns offset from UTC for given timezone (right now).
    * This includes DST (if observed).
    * @param  string   $zone
-   * @return integer
+   * @param  string   $format
+   * @return mixed
    */
-  public function GetZoneOffset($zone) {
-    $remote_dtz = new DateTimeZone($zone);
-    $remote_dt = new DateTime('now', $remote_dtz);
-    return $remote_dtz->getOffset($remote_dt);
+  private static function GetZoneOffset($zone, $format = 'Z') {
+    $DateObj = new DateTime('now');
+    $DateObj->setTimeZone(new DateTimeZone($zone));
+    return $DateObj->format($format);
   }
 
   #===================================================================
 
   /**
-   * Converts zone offset in seconds into 'H:m' format.
-   * @param  integer $sec
-   * @return string
+   * Tells whether DST is in effect (right now or for given epoch).
+   * @param   string    $zone ... e.g. 'Atlantic/Azores'
+   * @param   integer   $epoch .... optional (defaults to current epoch)
+   * @return  string    '0' or '1'
+   * @throws  \Exception
    */
-  public function Sec2Readable($sec) {
-    $hours   = floor(abs($sec)/3600);
-    $minutes = floor((abs($sec) - $hours*3600)/60);
-    $sign = ($sec >= 0) ? '+' : '-';
-    return $sign . str_pad($hours, 2, '0', STR_PAD_LEFT)  .':'.  str_pad($minutes, 2, '0', STR_PAD_LEFT);
+  private function GetDST($zone, $epoch = 'now') {
+
+    if (!empty($epoch) && is_string($epoch) && $epoch == 'now') {
+      $DateObj = new DateTime('now');
+    }
+    elseif (!empty($epoch) && is_numeric($epoch)) {
+      $epoch = (integer) $epoch;
+      $gmtDateStr = gmdate('Y-m-d H:i:s', $epoch);
+      $DateObj = new DateTime($gmtDateStr);
+    }
+    else {
+      throw new Exception('Illegal value argument epoch');
+    }
+
+    $DateObj->setTimeZone(new DateTimeZone($zone));
+
+    return $DateObj->format('I');
   }
 
   #===================================================================
