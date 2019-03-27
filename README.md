@@ -172,7 +172,7 @@ foreach ($zones as $key => $val) {
   if ($currentZone == $val['time_zone']) {
     echo ' selected';
   }
-  echo '>(UTC'. $val['std_offset_formatted'] .') '. $place .'</option>'."\n";
+  echo '>(UTC'. $val['offset_formatted'] .') '. $place .'</option>'."\n";
 }
 
 echo '</select>'."\n";
@@ -198,7 +198,7 @@ foreach ($zones as $key => $val) {
   if ($currentZone == $val['time_zone']) {
     echo ' selected';
   }
-  echo '>(UTC'. $val['std_offset_formatted'] .') '. $place .'</option>'."\n";
+  echo '>(UTC'. $val['offset_formatted'] .') '. $place .'</option>'."\n";
 }
 
 echo '</select>'."\n";
@@ -263,7 +263,7 @@ foreach ($zones as $key => $val) {
   if ($currentZone == $val['time_zone']) {
     echo ' selected';
   }
-  echo '>(UTC'. $val['std_offset_formatted'] .') '. $place .'</option>'."\n";
+  echo '>(UTC'. $val['offset_formatted'] .') '. $place .'</option>'."\n";
 }
 
 echo '</select>'."\n";
